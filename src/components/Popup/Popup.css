@@ -9,11 +9,13 @@
     max-width: 44px;
     height: 44px;
     width: 100%;
+    cursor: pointer;
 }
 
 .popup__visible:hover {
     transition: .8 ease;
-    opacity: .8;
+    opacity: 0.8;
+    cursor: pointer;
 }
 
 .popup__hidden {
@@ -55,6 +57,7 @@
     top: 23px;
     background-image: url(../../images/popupClose.svg);
     padding: 0;
+    cursor: pointer;
 }
 
 .popup__close:hover {

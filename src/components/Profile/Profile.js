@@ -1,11 +1,12 @@
 import React from 'react';
-import Header from '../Header/Header.js';
+import Navigation from '../Navigation/Navigation';
+import { Link} from 'react-router-dom';
 
 function Profile() {
 
   return (
     <div className="app">
-    <Header visibility={"none"}/>
+    <Navigation />
     <section className="profile">
       <h2 className="profile__title">Привет, Виталий!</h2>
         <div className="profile__list">
@@ -20,7 +21,9 @@ function Profile() {
       </div>
       <div className="profile__buttons">
         <button className="profile__button button" type="submit">Редактировать</button>
+        <Link to="/signin">
         <button className="profile__button profile__button-ex button" type="submit">Выйти из аккаунта</button>
+        </Link>
       </div>
       <div className="profile__save profile__save_none">
         <span className="profile__span">При обновлении произошла ошибка</span>

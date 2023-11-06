@@ -121,6 +121,7 @@
     .aboutMe__photo {
         max-width: 255px;
         max-height: 307px;
+        margin: 0 auto;
     }
 }
 

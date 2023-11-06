@@ -38,11 +38,13 @@
     transition: .2s ease;
     background-color: transparent;
     margin: 0;
+    cursor: pointer;
 }
 
 .profile__button-ex {
     color:rgba(238, 52, 101, 1);
     margin-top: 16px;
+    margin-left: 138px;
 }
 
 .profile__button-save {

@@ -87,4 +87,9 @@
         font-size: 18px;
         line-height: 28px;
     }
+
+    .portfolio__link_img{
+        width: 18px;
+        height: 28px;
+    }
 }

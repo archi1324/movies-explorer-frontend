@@ -45,11 +45,12 @@
     border: none;
     width: 76px;
     height: 32px;
+    text-decoration: none;
 }
 
 .header__login:hover {
     transition: 0.3s linear;
-    opacity: .8;
+    opacity: 0.8;
 }
 
 .header__logo:hover {

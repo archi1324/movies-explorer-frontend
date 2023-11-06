@@ -1,5 +1,4 @@
 import React from 'react';
-import Tumb from '../../images/smalltumb.svg'
 
 import './SearchForm.css'
 import find from '../../images/search.svg'
@@ -15,7 +14,10 @@ function SearchForm() {
                     <button className="search__button" type="button" aria-label="найти"></button>
                 </form>
                 < div className='search__checkbox'>
-                    <img className="checkbox__container" src={Tumb}/>
+                    <label className="checkbox__container">
+                        <input type="checkbox" name='checkbox' defaultChecked />
+                        <span className="checkbox__slider"></span>
+                    </label>
                     <span className='checkbox__text'>Короткометражки</span>
                 </div>
             </div>
