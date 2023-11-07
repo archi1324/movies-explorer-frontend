@@ -11,13 +11,15 @@ const navigate = useNavigate();
 	}
 
     return (
+        <main>
         <section className='pageNotFound'>
             <div className='pageNotFound__container'>
-                <h2 className='pageNotFound__title'>404</h2>
+                <h1 className='pageNotFound__title'>404</h1>
                 <p className='pageNotFound__subtitle'>Страница не найдена</p>
                 <p onClick={goBack} className='pageNotFound__link' onclick="history.back()">Назад</p>
             </div>
         </section>
+        </main>
     )
 }
 

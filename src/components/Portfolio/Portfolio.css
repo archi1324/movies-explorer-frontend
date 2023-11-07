@@ -5,6 +5,7 @@
 
 .portfolio__link_img{
     background-repeat: no-repeat;
+    margin-right: 7px;
 }
 
 .portfolio__title {
@@ -89,7 +90,12 @@
     }
 
     .portfolio__link_img{
-        width: 18px;
-        height: 28px;
+        width: 11px;
+        height: 26px;
+        margin-right: 4px;
+    }
+
+    .portfolio__title {
+        font-size: 14px;
     }
 }

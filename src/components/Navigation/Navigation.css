@@ -12,61 +12,66 @@
     width: 100%;
 }
 
+.navigation__logo{
+    margin: 0px 45px 0px 0;
+}
+
 .navigation__links {
-    gap: 20px;
-    display: flex;
+    gap: 16px;
     display: flex;
     align-items: center;
     text-align: right;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    padding: 0 0 3px 0;
+    letter-spacing: 0em;
+    text-align: right;
 }
 
-
 .navigation__link {
-    margin: 0;
-    padding-right: 665px;
-    text-decoration: none;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 18px;
-    display: flex;
-    text-align: right;
+    font-weight: 400;
     color: #FFFFFF;
+    text-decoration: none;
 }
 
 .navigation__link_active {
     font-weight: 500;
     padding: 0px;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+    color: #FFFFFF;
 }
 
 .navigation__account-data {
     display: flex;
+    gap: 13px;
     align-items: center;
-    justify-content: center;
-    max-width: 100px;
-    height: 30px;
-    gap: 17px;
-    padding-left: 30px;
+    margin: 0 0 0 auto;
+    padding: 0 0 2px 0;
+    text-decoration: none;
+    color: #FFFFFF;
 }
 
 .navigation__login {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    display: flex;
     color: #FFFFFF;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    margin: 0;
     text-decoration: none;
+    font-size: 12px;
+    line-height: 13px;
+    font-weight: 500;
+    
 }
 
 .navigation__account {
     border-radius: 4px;
     width: 26px;
     height: 30px;
-    background: #313131 url('../../images/profile.svg') no-repeat center;
+    background: #313131 url('../../images/profileIcon.svg') no-repeat center;
 }
 
 @media screen and (max-width: 768px) {

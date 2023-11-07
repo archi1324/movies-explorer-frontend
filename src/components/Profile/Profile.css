@@ -119,7 +119,7 @@
 
 @media screen and (max-width: 768px) {
     .profile {
-        margin-top: 236px;
+        margin-top: 225px;
     }
 
     .profile__title {
@@ -129,11 +129,15 @@
     .profile__buttons {
         margin-top: 210px;
     }
+
+    .profile__button-ex {
+        margin-left: 140px;
+    }
 }
 
 @media screen and (max-width: 450px) {
     .profile {
-        margin-top: 70px;
+        margin-top: 58px;
     }
 
     .profile__title {
@@ -165,6 +169,10 @@
 
     .profile__span {
         margin-top: 348px;
+    }
+
+    .profile__button-ex {
+        margin-left: 100px;
     }
 }
 

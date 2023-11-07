@@ -5,12 +5,13 @@ import headerLogo from '../../images/headerLogo.svg';
 
 function Login() {
     return (
+      <main>
         <section className="login">
       <Link to={"/"}>
         <img className="login__icon button" src={headerLogo} alt="Лого"/>
       </Link>
       <form className="login__form" name="login">
-        <h2 className="login__title">Рады видеть!</h2>
+        <h1 className="login__title">Рады видеть!</h1>
         <span className="login__plaseholder">E-mail</span>
         <input className="login__input" type="email" name="email"
         id="login-email" minLength={8} maxLength={20} required placeholder="Email"/>
@@ -24,6 +25,7 @@ function Login() {
       <p className="login__link">Еще не зарегистрированы?
       <Link to={"/signup"} className="login__link-src button" href="#">Регистрация</Link></p>
     </section>
+    </main>
     )
 }
 

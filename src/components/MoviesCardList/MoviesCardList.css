@@ -1,16 +1,18 @@
 .movieCardList {
-    padding: 0px 70px 0 70px;
+    padding: 0 70px 81px 70px;
 }
 
 .movieCardList__container {
-    padding-top: 70px;
+    padding-top: 80px;
+    margin: 0;
     border-top: 1px solid #424242;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    row-gap: 38px;
+    row-gap: 33px;
     column-gap: 20px;
     justify-content: center;
+    padding-left: 0px;
 }
 
 .movieCardList__button {
@@ -19,16 +21,16 @@
     font-size: 12px;
     line-height: 15px;
     color: #FFFFFF;
-    margin: 0;
     padding: 0;
+    margin: 0 auto;
+    display: block;
+    margin-top: 56px;
+    width: 320px;
     height: 36px;
-    margin-top: 60px;
     border: none;
     cursor: pointer;
     background-color: #2F2F2F;
     border-radius: 5px;
-    margin-bottom: 80px;
-    width: 100%;
 }
 
 .movieCardList__button:hover {
@@ -44,8 +46,12 @@
 
     .movieCardList__container {
         grid-template-columns: repeat(2, 1fr);
-        row-gap: 30px;
+        row-gap: 24px;
         column-gap: 30px;
+    }
+
+    .movieCardList__button {
+        margin-top: 60px ;
     }
 }
 
@@ -55,11 +61,15 @@
     }
 
     .movieCardList__container {
-        margin: 0;
-        padding-top: 40px;
-        display: flex;
-        flex-direction: column;
+        padding: 40px 10px 10px;
+        grid-template-columns: repeat(auto-fit, 300px);
+        row-gap: 27px;
         justify-content: center;
-        align-items: center;
+        margin: 0 auto;
+    }
+
+    .movieCardList__button {
+        width: 240px;
+        margin-top: 48px;
     }
 }

@@ -10,6 +10,8 @@
     align-items: center;
     text-align: right;
     gap: 30px;
+    margin-top: -5px;
+    margin-right: 1px;
 }
 
 
@@ -61,6 +63,11 @@
     .header {
         padding: 18px 30px 18px 30px;
     }
+
+    .header__menu {
+        margin-top: -5px;
+        margin-right: 1px;
+    }
 }
 
 @media screen and (max-width: 424px) {
@@ -69,7 +76,7 @@
     }
 
     .header__menu:last-of-type {
-        padding-right: 14px;
+        padding-right: 0px;
     }
 
     .header__menu {

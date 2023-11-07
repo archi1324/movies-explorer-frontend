@@ -7,8 +7,9 @@ function Profile() {
   return (
     <div className="app">
     <Navigation />
+    <main> 
     <section className="profile">
-      <h2 className="profile__title">Привет, Виталий!</h2>
+      <h1 className="profile__title">Привет, Виталий!</h1>
         <div className="profile__list">
         <div className="profile__container">
             <p className="profile__item">Имя</p>
@@ -30,6 +31,7 @@ function Profile() {
         <button className="profile__button-save_none profile__button-save button" type="submit">Сохранить</button>
       </div>
     </section>
+    </main>
     </div>
   );
 }

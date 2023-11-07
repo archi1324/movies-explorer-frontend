@@ -1,4 +1,4 @@
-.popup__visible {
+.navigation__popup-visible {
     border: none;
     display: none;
     background-image: url(../../images/popup.svg);
@@ -12,17 +12,17 @@
     cursor: pointer;
 }
 
-.popup__visible:hover {
+.navigation__popup-visible:hover {
     transition: .8 ease;
     opacity: 0.8;
     cursor: pointer;
 }
 
-.popup__hidden {
+.navigation__popup-hidden {
     display: none;
 }
 
-.popup__open {
+.navigation__popup-open {
     display: flex;
     visibility: hidden;
     position: fixed;
@@ -39,11 +39,11 @@
     z-index: 5;
 }
 
-.popup__open_active {
+.navigation__popup-open_active {
     visibility: visible;
 }
 
-.popup__close {
+.navigation__popup-close {
     border: none;
     position: absolute;
     background-color: transparent;
@@ -60,12 +60,12 @@
     cursor: pointer;
 }
 
-.popup__close:hover {
+.navigation__popup-close:hover {
     transition: 0.8 linear;
     opacity: .8;
 }
 
-.popup__links {
+.navigation__popup-links {
     margin: 0;
     padding-top: 159px;
     display: flex;
@@ -73,7 +73,7 @@
     gap: 28px;
 }
 
-.popup__link {
+.navigation__popup-link {
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -83,11 +83,11 @@
     text-decoration: none;
 }
 
-.popup__link_active {
+.navigation__popup-link_active {
     text-decoration: underline;
 }
 
-.popup__footer {
+.navigation__popup-footer {
     display: flex;
     align-items: center;
     max-width: 100px;
@@ -97,7 +97,7 @@
     padding-bottom: 92px;
 }
 
-.popup__login {
+.navigation__popup-login {
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -107,7 +107,7 @@
     color: #FFFFFF;
 }
 
-.popup__acc {
+.navigation__popup-acc {
     border-radius: 4px;
     width: 26px;
     height: 30px;
@@ -115,35 +115,36 @@
 }
 
 @media screen and (max-width: 768px) {
-    .popup__visible {
+    .navigation__popup-visible {
         display: block;
-        max-width: 40px;
-        height: 43px;
+        width: 130px;
+        height: 61px;
+        margin-top: -12px;
     }
 }
 
 @media screen and (max-width: 424px) {
-    .popup__visible {
+    .navigation__popup-visible {
         display: block;
         max-width: 40px;
-        height: 43px;
+        height: 62px;
     }
 
-    .popup__open {
+    .navigation__popup-open {
         width: 100vw;
     }
 
-    .popup__close {
+    .navigation__popup-close {
         right: 14px;
         top: 14px;
     }
 
-    .popup__links {
+    .navigation__popup-links {
         padding-top: 144px;
         gap: 24px;
     }
 
-    .popup__footer {
+    .navigation__popup-footer {
         padding-bottom: 43px;
     }
 }

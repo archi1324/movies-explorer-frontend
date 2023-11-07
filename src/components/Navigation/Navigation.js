@@ -24,7 +24,7 @@ function Navigation() {
             <div className='navigation__menu'>
                 <div className='navigation__popup'>
                 <Link to="/">
-                  <img className='header__logo' src={headerLogo} alt='Логотип' />
+                  <img className='navigation__logo button' src={headerLogo} alt='Логотип' />
                 </Link>
                     <Popup
                         isOpen={isPopupOpen}
@@ -35,11 +35,11 @@ function Navigation() {
                 <div className='navigation__links'>
                     <Link className='navigation__link navigation__link_active' to='/movies'>Фильмы</Link>
                     <Link className='navigation__link' to='/saved-movies'>Сохранённые фильмы</Link>
+                </div>
                     <nav className='navigation__account-data'>
                         <Link className="navigation__login" to="/profile">Аккаунт</Link>
-                        <Link className="navigation__account" to="/profile"  src={accountLogo} alt='изображение человечка'></Link>
+                        <Link className="navigation__account" to="/profile"  src={accountLogo} ></Link>
                     </nav>
-                </div>
             </div>
         </section>
     )

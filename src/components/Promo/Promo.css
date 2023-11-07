@@ -22,7 +22,7 @@
     margin: 0;
     margin-left: auto;
     margin-right: 70px;
-    padding-top: 102px;
+    padding-top: 99px;
     opacity: 0.7;
     object-fit: cover;
     width: 722px;
@@ -37,6 +37,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        overflow: hidden;
     }
 
     .promo__title {
@@ -66,6 +67,10 @@
     .promo__image {
         background-size: cover;
         margin-bottom: 40px;
-        padding-top: 60px;
+        padding-top: 56px;
+        margin-left: 0;
+        margin-right: 0;
+        width: 680px;
+        height: 230px;
     }
 }

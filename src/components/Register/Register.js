@@ -5,12 +5,13 @@ import './Register.css';
 
 function Register() {
     return (
+      <main>
         <section className="login">
         <Link to={"/"}>
           <img className="login__icon button" src={headerLogo} alt="Лого"/>
         </Link>
         <form className="login__form" name="register">
-          <h2 className="login__title">Добро пожаловать!</h2>
+          <h1 className="login__title">Добро пожаловать!</h1>
           <span className="login__plaseholder">Имя</span>
           <input className="login__input" type="text" name="name"
           id="register-name" placeholder="Имя" minLength={4} maxLength={16} required />
@@ -28,6 +29,7 @@ function Register() {
         <p className="login__link">Уже зарегистрированы?
         <Link to={"/signin"} className="login__link-src button" href="#">Войти</Link></p>
       </section>
+      </main>
     );
 }
 

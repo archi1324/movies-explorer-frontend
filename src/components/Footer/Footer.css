@@ -18,7 +18,7 @@
 .footer__content {
     display: flex;
     justify-content: space-between;
-    padding-top: 20px;
+    padding-top: 18px;
 }
 
 .footer__copyright {
@@ -70,6 +70,7 @@
         flex-direction: column-reverse;
         align-items: center;
         padding-top: 30px;
+        font-size: 12px;
     }
 
     .footer__copyright {
@@ -87,5 +88,9 @@
         font-size: 12px;
         line-height: 15px;
         text-align: center;
+    }
+
+    .footer__tittle {
+        font-size: 12px;
     }
 }

@@ -7,11 +7,11 @@ import './MoviesCardList.css';
 function MoviesCardList({ cards }) {
     return (
         <section className='movieCardList'>
-            <div className='movieCardList__container'>
+            <ul className='movieCardList__container'>
                 {cards.map((card) => (
                     <MoviesCard key={card.id} card={card} />
                 ))}
-            </div>
+            </ul>
             <button className='movieCardList__button' aria-label='Загрузить ещё' type='button'>Ещё</button>
         </section>
     );

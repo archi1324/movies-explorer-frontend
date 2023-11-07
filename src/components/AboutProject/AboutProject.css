@@ -23,7 +23,7 @@
     font-weight: 400;
     font-size: 22px;
     line-height: 27px;
-    letter-spacing: -0.04em;
+    letter-spacing: 0.2px;
     color: #FFFFFF;
     padding-bottom: 23px;
     margin: 0;
@@ -55,12 +55,16 @@
 }
 
 .aboutProject__component:last-of-type {
-    padding-left: 40px;
+    padding-left: 51px;
 }
 
 @media screen and (max-width: 768px) {
     .aboutProject__component:last-of-type {
-        padding-left: 30px;
+        padding-left: 36px;
+    }
+
+    .aboutProject__week_backend {
+        width: 139px;
     }
 }
 
@@ -73,6 +77,10 @@
         padding-top: 56px;
         padding-left: 0px;
     }
+
+    .aboutProject__line {
+        margin-top: 5px;
+    }
 }
 
 .aboutProject__tittle {
@@ -80,8 +88,18 @@
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
-    letter-spacing: -0.04em;
+    letter-spacing: 0.2px;
     color: #FFFFFF;
+    margin: 0;
+}
+
+.aboutProject__subtittle {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    letter-spacing: -0.8px;
     margin: 0;
 }
 
@@ -89,6 +107,16 @@
     .aboutProject__tittle {
         font-size: 18px;
         line-height: 22px;
+        letter-spacing: -0.6px;
+    }
+
+    .aboutProject__subtittle {
+        font-family: Inter;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 24px;
+        letter-spacing: -1.9px;
+        text-align: left;
     }
 }
 
@@ -99,7 +127,7 @@
     line-height: 20px;
     color: #FFFFFF;
     margin: 0;
-    padding-top: 26px;
+    padding-top: 28px;
 }
 
 @media screen and (max-width: 768px) {
@@ -107,14 +135,6 @@
         font-size: 12px;
         line-height: 18px;
         padding-top: 22px;
-    }
-}
-
-@media screen and (max-width: 424px) {
-    .aboutProject_text {
-        font-size: 11px;
-        line-height: 16px;
-        padding-top: 16px;
     }
 }
 
@@ -163,6 +183,7 @@
         height: 35px;
         font-size: 11px;
         line-height: 13px;
+        width: 100px;
     }
 }
 
@@ -184,6 +205,7 @@
 @media screen and (max-width: 424px) {
     .aboutProject__week_frontend {
         height: 35px;
+        padding-right: 6px;
         font-size: 11px;
         line-height: 13px;
     }
@@ -204,6 +226,14 @@
     .aboutProject__week_text {
         font-size: 11px;
         line-height: 13px;
+        padding-top: 10px;
+        padding-right: 7px;
+    }
+
+    .aboutProject__text{
+        letter-spacing: -0.55px;
+        font-size: 12px;
+        line-height: 17px;
         padding-top: 10px;
     }
 }
