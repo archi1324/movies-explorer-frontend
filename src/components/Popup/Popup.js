@@ -25,7 +25,7 @@ function Popup({ onClick, isOpen, onClose }) {
                 </nav>
                 <nav className='navigation__popup-footer'>
                     <Link className="navigation__popup-login" to="/profile">Аккаунт</Link>
-                    <Link className="navigation__popup-acc" to="/profile" href={accountLogo}></Link>
+                    <Link className="navigation__popup-acc" to="/profile" href={accountLogo} ></Link>
                 </nav>
             </div>
             

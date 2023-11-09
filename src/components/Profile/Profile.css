@@ -1,7 +1,7 @@
 .profile {
     width: 100%;
     max-width: 410px;
-    margin: 74px auto;
+    margin: 70px auto;
 }
 
 .profile__title {
@@ -17,6 +17,7 @@
 
 .profile__button-container{
     margin: 0 auto;
+    text-decoration: 0;
 }
 
 .profile__buttons {
@@ -138,7 +139,7 @@
     .profile {
         margin: 0;
         margin-top: 58px;
-        height: 706px;
+        max-height: 780px;
     }
 
     .profile__title {
