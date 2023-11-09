@@ -3,7 +3,7 @@
     background-color: #202020;
 }
 
-.portfolio__link_img{
+.portfolio__link-img{
     background-repeat: no-repeat;
     margin-right: 7px;
 }
@@ -63,7 +63,11 @@
 
 @media screen and (max-width: 768px) {
     .portfolio {
-        padding: 91px 50px 90px 50px;
+        padding: 91px 50px 9px 49px;
+    }
+
+    .portfolio__link-img {
+        margin-right: 5px;
     }
 
     .portfolio__title {
@@ -89,7 +93,7 @@
         line-height: 28px;
     }
 
-    .portfolio__link_img{
+    .portfolio__link-img{
         width: 11px;
         height: 26px;
         margin-right: 4px;

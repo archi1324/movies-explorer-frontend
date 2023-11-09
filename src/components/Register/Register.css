@@ -125,6 +125,10 @@
     visibility: visible;
 }
 
+.login__buttons {
+    margin-top: 208px;
+}
+
 .login__input-ok {
     border-bottom: 1px solid rgba(66, 133, 244, 1);
 }
@@ -144,7 +148,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 56px;
+        margin: 0px auto;
+        padding: 0;
+        margin-top: 52px;
     }
 
     .login__icon {
@@ -170,8 +176,12 @@
         font-size: 12px;
         line-height: 14.52px;
     }
-}
 
-.log__button {
-    margin-top: 208px;
+    .login__buttons {
+        margin-top: 290px;
+    }
+
+    .Registr{
+        margin-top: 52px;
+    }
 }

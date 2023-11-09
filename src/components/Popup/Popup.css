@@ -35,7 +35,7 @@
     justify-content: center;
     justify-content: space-between;
     align-items: center;
-    height: 100vh;
+    height: 105vh;
     z-index: 5;
 }
 
@@ -85,6 +85,7 @@
 
 .navigation__popup-link_active {
     text-decoration: underline;
+    text-underline-offset: 10px;
 }
 
 .navigation__popup-footer {
@@ -105,6 +106,7 @@
     display: flex;
     align-items: center;
     color: #FFFFFF;
+    text-decoration: none;
 }
 
 .navigation__popup-acc {
@@ -135,16 +137,23 @@
     }
 
     .navigation__popup-close {
-        right: 14px;
-        top: 14px;
+        right: 28px;
+        top: 18px;
+        background-image: url(../../images/Group.svg);
     }
 
     .navigation__popup-links {
-        padding-top: 144px;
+        padding-top: 145px;
         gap: 24px;
     }
 
+    .navigation__popup-links {
+        padding-right: 20px;
+    }
+
     .navigation__popup-footer {
-        padding-bottom: 43px;
+        padding-bottom: 115px;
+        letter-spacing: -0.5px;
+        gap: 9px;
     }
 }

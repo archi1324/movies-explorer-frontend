@@ -15,7 +15,7 @@ const MoviesCard = ({ card }) => {
     }
 
     return (
-        <div className='moviesCard'>
+        <li className='moviesCard'>
             <img className='moviesCard__image' src={card.image} alt='картинка фильма' />
 
             <div className='moviesCard__container'>
@@ -32,7 +32,7 @@ const MoviesCard = ({ card }) => {
                             <img className='moviesCard__add' alt='лайк' src={disLiked} />}</button>}
             </div>
             <p className='moviesCard__time'>{card.time}</p>
-        </div>
+        </li>
     );
 };
 

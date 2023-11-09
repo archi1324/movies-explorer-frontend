@@ -9,7 +9,7 @@ function Profile() {
     <Navigation />
     <main> 
     <section className="profile">
-      <h1 className="profile__title">Привет, Виталий!</h1>
+      <h2 className="profile__title">Привет, Виталий!</h2>
         <div className="profile__list">
         <div className="profile__container">
             <p className="profile__item">Имя</p>
@@ -22,8 +22,8 @@ function Profile() {
       </div>
       <div className="profile__buttons">
         <button className="profile__button button" type="submit">Редактировать</button>
-        <Link to="/signin">
-        <button className="profile__button profile__button-ex button" type="submit">Выйти из аккаунта</button>
+        <Link className= "profile__button-container" to="/signin">
+          <div className="profile__button profile__button-ex button" >Выйти из аккаунта</div>
         </Link>
       </div>
       <div className="profile__save profile__save_none">

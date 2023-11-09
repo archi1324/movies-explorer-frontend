@@ -1,7 +1,7 @@
 import React from 'react';
 import './AboutMe.css';
 
-import photo from '../../images/my photo.jpeg';
+import photo from '../../images/my_photo.jpeg';
 
 function AboutMe(props) {
     return (

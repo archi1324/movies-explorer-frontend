@@ -15,6 +15,10 @@
     margin-bottom: 123px;
 }
 
+.profile__button-container{
+    margin: 0 auto;
+}
+
 .profile__buttons {
     margin-top: 220px;
     display: flex;
@@ -42,9 +46,8 @@
 }
 
 .profile__button-ex {
-    color:rgba(238, 52, 101, 1);
-    margin-top: 16px;
-    margin-left: 138px;
+    color: rgba(238, 52, 101, 1);
+    margin-top: 12px;
 }
 
 .profile__button-save {
@@ -129,15 +132,13 @@
     .profile__buttons {
         margin-top: 210px;
     }
-
-    .profile__button-ex {
-        margin-left: 140px;
-    }
 }
 
 @media screen and (max-width: 450px) {
     .profile {
+        margin: 0;
         margin-top: 58px;
+        height: 706px;
     }
 
     .profile__title {
@@ -172,7 +173,11 @@
     }
 
     .profile__button-ex {
-        margin-left: 100px;
+        margin: 0 auto;
+    }
+
+    .profile__button-container {
+        margin: 13px auto;
     }
 }
 

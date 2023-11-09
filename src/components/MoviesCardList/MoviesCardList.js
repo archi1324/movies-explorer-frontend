@@ -12,7 +12,6 @@ function MoviesCardList({ cards }) {
                     <MoviesCard key={card.id} card={card} />
                 ))}
             </ul>
-            <button className='movieCardList__button' aria-label='Загрузить ещё' type='button'>Ещё</button>
         </section>
     );
 };

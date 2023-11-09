@@ -20,7 +20,7 @@ function Login() {
         <input className="login__input" type="password" name="password"
         id="login-password" minLength={8} maxLength={20} required placeholder="Пароль"/>
         <span className="login__error">Что-то пошло не так</span>
-        <button className="login__button log__button button" type="submit">Войти</button>
+        <button className="login__button login__buttons button" type="submit">Войти</button>
       </form>
       <p className="login__link">Еще не зарегистрированы?
       <Link to={"/signup"} className="login__link-src button" href="#">Регистрация</Link></p>

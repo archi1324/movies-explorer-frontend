@@ -6,7 +6,7 @@ import './Register.css';
 function Register() {
     return (
       <main>
-        <section className="login">
+        <section className="login Registr">
         <Link to={"/"}>
           <img className="login__icon button" src={headerLogo} alt="Лого"/>
         </Link>

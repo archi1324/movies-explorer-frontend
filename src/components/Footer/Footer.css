@@ -57,12 +57,14 @@
     .footer {
         padding-left: 30px;
         padding-right: 30px;
+        padding-top: 161px;
     }
 }
 
 @media screen and (max-width: 424px) {
     .footer {
         padding-left: 10px;
+        padding-top: 127px;
         padding-right: 10px;
     }
 

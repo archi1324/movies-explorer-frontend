@@ -20,7 +20,7 @@ function Navigation() {
     }
 
     return (
-        <section className='navigation'>
+        <div className='navigation'>
             <div className='navigation__menu'>
                 <div className='navigation__popup'>
                 <Link to="/">
@@ -38,10 +38,10 @@ function Navigation() {
                 </div>
                     <nav className='navigation__account-data'>
                         <Link className="navigation__login" to="/profile">Аккаунт</Link>
-                        <Link className="navigation__account" to="/profile"  src={accountLogo} ></Link>
+                        <Link className="navigation__account" to="/profile"  href={accountLogo} ></Link>
                     </nav>
             </div>
-        </section>
+        </div>
     )
 }
 

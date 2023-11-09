@@ -19,13 +19,13 @@ function AboutProject() {
             </ul>
 
             <ul className='aboutProject__week'>
-                <li className='aboutProject__week_component'>
-                    <h4 className='aboutProject__week_backend'>1 неделя</h4>
-                    <p className='aboutProject__week_text'>Back-end</p>
+                <li className='aboutProject__week-component'>
+                    <h4 className='aboutProject__week-backend'>1 неделя</h4>
+                    <p className='aboutProject__week-text'>Back-end</p>
                 </li>
-                <li className='aboutProject__week_component'>
-                    <h4 className='aboutProject__week_frontend'>4 недели</h4>
-                    <p className='aboutProject__week_text'>Front-end</p>
+                <li className='aboutProject__week-component'>
+                    <h4 className='aboutProject__week-frontend'>4 недели</h4>
+                    <p className='aboutProject__week-text'>Front-end</p>
                 </li>
             </ul>
         </section>)
