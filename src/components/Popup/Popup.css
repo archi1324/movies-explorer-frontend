@@ -136,7 +136,7 @@
 
     .navigation__popup-open {
         width: 100vw;
-        max-height: 780px;
+        height: 100vh;
     }
 
     .navigation__popup-close {

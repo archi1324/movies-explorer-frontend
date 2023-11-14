@@ -9,7 +9,13 @@
     height: 38px;
     margin-bottom: 40px;
 }
-    
+
+.login__button_disabled {
+    background-color: rgba(49, 49, 49, 1);
+    opacity: .3;
+    pointer-events: none;
+}
+
 .login__button {
     max-width: 396px;
     min-height: 45px;

@@ -118,7 +118,20 @@
     font-style: normal;
     font-size: 11px;
     line-height: 13.31px;
+    outline:none;
     color:rgba(255, 255, 255, 1);
+}
+
+.profile__item_input {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 11px;
+    line-height: 13.31px;
+    outline:none;
+    color:rgba(0,0,0, 1);
 }
 
 @media screen and (max-width: 768px) {

@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 
 import headerLogo from '../../images/headerLogo.svg'
 
-function Header(props) {
+function Header({loggedIn}) {
 
     return (
+
         <header className='header'>
           <Link to="/">
             <img className='header__logo button' src={headerLogo} alt='Логотип' />

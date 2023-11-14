@@ -2,9 +2,9 @@ import React from 'react';
 
 import './Error.css'
 
-function Error() {
+function Error({errorMessage}) {
     return (
-        <span className='error error__visible'>Что-то пошло не так...</span>
+        <span className='error error__visible'>{errorMessage}</span>
         )
 }
 

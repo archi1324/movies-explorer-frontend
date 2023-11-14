@@ -19,9 +19,15 @@ function Popup({ onClick, isOpen, onClose }) {
             <div className={PopupActive}>
                 <button className="navigation__popup-close" onClick={onClose} />
                 <nav className="navigation__popup-links">
-                    <Link className="navigation__popup-link" to="/">Главная</Link>
-                    <Link className="navigation__popup-link navigation__popup-link_active" to="/movies">Фильмы</Link>
-                    <Link className="navigation__popup-link" to="/saved-movies">Сохранённые фильмы</Link>
+                    <Link className={({ isActive }) =>
+                        isActive ? "navigation__popup-link_active" : "navigation__popup-link"
+                    } to="/">Главная</Link>
+                    <Link className={({ isActive }) =>
+                        isActive ? "navigation__popup-link_active" : "navigation__popup-link"
+                    } to="/movies">Фильмы</Link>
+                    <Link className={({ isActive }) =>
+                        isActive ? "navigation__popup-link_active" : "navigation__popup-link"
+                    } to="/saved-movies">Сохранённые фильмы</Link>
                 </nav>
                 <nav className='navigation__popup-footer'>
                     <Link className="navigation__popup-login" to="/profile">Аккаунт</Link>
