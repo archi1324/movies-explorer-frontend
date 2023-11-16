@@ -35,7 +35,7 @@ function Navigation({ loggedIn }) {
                 </div>
                 <div className='navigation__links'>
                     <Link className='navigation__link navigation__link_active' to='/movies'>Фильмы</Link>
-                    <Link className='navigation__link'>Сохранённые фильмы</Link>
+                    <Link className='navigation__link' to='/saved-movies'>Сохранённые фильмы</Link>
                 </div>
                     <nav className='navigation__account-data'>
                         <Link className="navigation__login" to="/profile">Аккаунт</Link>

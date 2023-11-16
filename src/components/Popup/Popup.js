@@ -34,7 +34,7 @@ function Popup({ onClick, isOpen, onClose }) {
                     <Link className="navigation__popup-acc" to="/profile" href={accountLogo} ></Link>
                 </nav>
             </div>
-            
+
         </>
     )
 }

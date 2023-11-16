@@ -1,153 +1,143 @@
-import React from 'react';
-import { getMovies } from '../../utils/MoviesApi';
-import Preloader from '../Preloader/Preloader';
+import './Movies.css';
+import { useState, useContext, useEffect } from 'react';
+import moviesApi from '../../utils/MoviesApi';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import './Movies.css'
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import Navigation from '../Navigation/Navigation'
+import Footer from  '../Footer/Footer'
 
-function Movies({ savedMovies, handleLikeClick, onCardDelete }) {
+export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDeleteClick }) {
+  const currentUser = useContext(CurrentUserContext);
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [allMovies, setAllMovies] = React.useState([]);
-  const [initialMovies, setInitialMovies] = React.useState([]);
-  const [filteredMovies, setFilteredMovies] = React.useState([]);
-  const [isShortMovies, setIsShortMovies] = React.useState(false);
-  const [isReqErr, setIsReqErr] = React.useState(false);
-  const [isNotFound, setIsNotFound] = React.useState(false);
-  const [searchClick, setSearchClick] = React.useState(false);
+  const [shorts, setShorts] = useState(false);
+  const [initialMovies, setInitialMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [error, setError] = useState('');
+  const [allMovies, setAllMovies] = useState([]);
 
-  function filterMovies(movies, query) {
-    const moviesByQuery = movies.filter((movie) => {
+  function filterShortMovies(movies) {
+    return movies.filter(movie => movie.duration < 40);
+  }
+
+  function checkImage(movies) {
+    movies.forEach(movie => {
+      if (!movie.image) {
+        movie.image = 'https://images.unsplash.com/photo-1485846234645-a62644f84728?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1940&q=80';
+        movie.thumbnail = 'https://images.unsplash.com/photo-1485846234645-a62644f84728?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1940&q=80';
+      } else {
+        movie.thumbnail = `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`
+        movie.image = `https://api.nomoreparties.co${movie.image.url}`
+      }
+    });
+    return movies
+  }
+
+  function filterMovies(movies, userQuery, shortMoviesCheckbox) {
+    setError('');
+    const moviesByUserQuery = movies.filter((movie) => {
       const movieRu = String(movie.nameRU).toLowerCase().trim();
       const movieEn = String(movie.nameEN).toLowerCase().trim();
-      const userQuery = query.toLowerCase().trim();
-      return (
-        movieRu.indexOf(userQuery) !== -1 || movieEn.indexOf(userQuery) !== -1
-      );
+      const userMovie = userQuery.toLowerCase().trim();
+      return movieRu.indexOf(userMovie) !== -1 || movieEn.indexOf(userMovie) !== -1;
     });
-    return moviesByQuery;
+    if (shortMoviesCheckbox) {
+      return filterShortMovies(moviesByUserQuery);
+    } else {
+      return moviesByUserQuery;
+    }
   }
 
-  console.log(filteredMovies);
-
-  function filterDuration(movies) {
-    return movies.filter((movie) => movie.duration < 40);
-  }
-
-  function handleFilterMovies(movies, query, short) {
-    const moviesList = filterMovies(movies, query, short);
-
-    setInitialMovies(moviesList); //записываем в стейт
-    setFilteredMovies(short ? filterDuration(moviesList) : moviesList);
-    localStorage.setItem("movies", JSON.stringify(moviesList));
-    localStorage.setItem("allMovies", JSON.stringify(movies));
-  }
-
-  function handleNoFilterMovies(movies, short) {
-    const moviesList = movies;
+  function setFiltered(movies, userQuery, shortMoviesCheckbox) {
+    setError('');
+    const moviesList = filterMovies(movies, userQuery, shortMoviesCheckbox);
+    if (moviesList.length === 0)
+    {
+      {setError('Ничего не найдено')};
+    }
     setInitialMovies(moviesList);
-    setFilteredMovies(short ? filterDuration(moviesList) : moviesList);
-    localStorage.setItem("movies", JSON.stringify(moviesList));
-    localStorage.setItem("allMovies", JSON.stringify(movies));
+    setFilteredMovies(
+      shortMoviesCheckbox ? filterShortMovies(moviesList) : moviesList
+    );
+    localStorage.setItem(
+      `${currentUser.email} - movies`,
+      JSON.stringify(moviesList)
+    );
   }
 
-  function handleShortMovies() {
-    setIsShortMovies(!isShortMovies);
-    if (!isShortMovies) {
-      if (filterDuration(initialMovies).length === 0) {
-        setFilteredMovies(filterDuration(initialMovies));
-        setIsNotFound(true);
-      } else {
-        setFilteredMovies(filterDuration(initialMovies));
-        setIsNotFound(false);
-      }
+  function searchSubmit(inputValue) {
+    setError('');
+    localStorage.setItem(`${currentUser.email} - movieSearch`, inputValue);
+    localStorage.setItem(`${currentUser.email} - shortMovies`, shorts);
+    if (allMovies.length === 0) {
+      setIsLoader(true);
+      moviesApi
+        .getMovies()
+        .then(movies => {
+          setAllMovies(movies);
+          setFiltered(
+            checkImage(movies),
+            inputValue,
+            shorts
+          );
+        })
+        .catch(() => { setError("Ошибка соединения") })
+        .finally(() => setIsLoader(false));
+    } else {
+      setFiltered(allMovies, inputValue, shorts);
+    }
+  }
+
+  function statusCheckbox() {
+    setError('');
+    setShorts(!shorts);
+    if (!shorts) {
+      setFilteredMovies(filterShortMovies(initialMovies));
     } else {
       setFilteredMovies(initialMovies);
-      setIsNotFound(initialMovies.length === 0 ? true : false);
     }
-    localStorage.setItem("shortMovies", !isShortMovies);
+    localStorage.setItem(`${currentUser.email} - shortMovies`, !shorts);
   }
 
-  function onSearchMovies(query) {
-    localStorage.setItem("movieSearch", query);
-    localStorage.setItem("shortMovies", isShortMovies);
-    if (query == 0) {
-      const movies = JSON.parse(localStorage.getItem("allMovies"));
-      handleNoFilterMovies(movies, isShortMovies);
-    }
-    if (localStorage.getItem("allMovies")) {
-      const movies = JSON.parse(localStorage.getItem("allMovies"));
-      handleFilterMovies(movies, query, isShortMovies);
+  useEffect(() => {
+    if (localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true') {
+      setShorts(true);
     } else {
-      setIsLoading(true);
-      getMovies()
-        .then((data) => {
-          handleFilterMovies(data, query, isShortMovies);
-          setIsReqErr(false);
-          setAllMovies(data);
-        })
-        .catch((err) => {
-          setIsReqErr(true);
-          console.log(`Возникла ошибка, ${err}`);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+      setShorts(false);
     }
-  }
+  }, [currentUser]);
 
-  React.useEffect(() => {
-    if (localStorage.getItem("shortMovies") === "true") {
-      setIsShortMovies(true);
-    } else {
-      setIsShortMovies(false);
-    }
-  }, []);
-
-  React.useEffect(() => {
-    if (localStorage.getItem("movies")) {
-      const movies = JSON.parse(localStorage.getItem("movies"));
+  useEffect(() => {
+    if (localStorage.getItem(`${currentUser.email} - movies`)) {
+      const movies = JSON.parse(
+        localStorage.getItem(`${currentUser.email} - movies`)
+      );
       setInitialMovies(movies);
-      if (localStorage.getItem("shortMovies") === "true") {
-        setFilteredMovies(filterDuration(movies));
+      if (
+        localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true'
+      ) {
+        setFilteredMovies(filterShortMovies(movies));
       } else {
         setFilteredMovies(movies);
       }
     }
-  }, []);
+  }, [currentUser]);
 
-  React.useEffect(() => {
-    if (localStorage.getItem("movieSearch")) {
-      if (filteredMovies.length === 0) {
-        setIsNotFound(true);
-      } else {
-        setIsNotFound(false);
-      }
-    } else {
-      setIsNotFound(false);
-    }
-  }, [filteredMovies]);
-
-   return (
-        <main className='movies'>
-            <SearchForm onSearchMovies={onSearchMovies}
-            onFilter={handleShortMovies}
-            isShortMovies={isShortMovies}
-            setSearchClick={setSearchClick}/>
-
-            <MoviesCardList cards={filteredMovies}
-          savedMovies={savedMovies}
-          isLoading={isLoading}
-          isSavedFilms={false}
-          isReqErr={isReqErr}
-          isNotFound={isNotFound}
-          handleLikeClick={handleLikeClick}
-          onCardDelete={onCardDelete}
-          searchClick={searchClick}
-          setSearchClick={setSearchClick}/>
-            <button className='movies__button' aria-label='Загрузить ещё' type='button'>Ещё</button>
-        </main>
-    );
+  return (
+    <main className="movies">
+      <Navigation/>
+      <SearchForm
+        handleSearchSubmit={searchSubmit}
+        handleShortFilms={statusCheckbox}
+        shortMovies={shorts}
+      />
+        <MoviesCardList
+          moviesList={filteredMovies}
+          savedMoviesList={savedMoviesList}
+          onLikeClick={onLikeClick}
+          onDeleteClick={onDeleteClick}
+        />
+      <Footer/>
+    </main>
+  );
 }
-
-export default Movies;

@@ -1,53 +1,74 @@
-import React from 'react';
+import './Register.css';
 import { Link } from 'react-router-dom';
 import headerLogo from '../../images/headerLogo.svg'
-import './Register.css';
-import {useFormWithValidation} from '../../hooks/useFormWithValidation';
+import useFormWithValidation  from "../../hooks/useFormWithValidation";
+
+export default function Register({ handleRegister }) {
+  const { values, handleChange, isValid, errors } = useFormWithValidation();
 
 
-function Register(props) {
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleRegister(values);
+  }
 
-  const [values, errors, isValid, handleChange] = useFormWithValidation();
+  return (
+    <main >
+    <section className="login Registr">
+    <Link to="/">
+          <img src={headerLogo} alt="Логотип" className="login__icon button" />
+    </Link>
+      <form className="login__form" name="register" noValidate onSubmit={handleSubmit}>
 
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        props.onRegister(values)
-    }
+        <h1 className="login__title">Добро пожаловать!</h1>
+            <span className="login__plaseholder">Имя</span>
+            <input
+              name="name"
+              className={`login__input ${errors.name && 'login__input_error'}`}
+              onChange={handleChange}
+              value={values.name || ''}
+              type="text"
+              required
+              minLength="2"
+              maxLength="30"
+              pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
+            />
+            <span className="login__error">{errors.name || ''}</span>
 
-    return (
-      <main>
-        <section className="login Registr">
-        <Link to={"/"}>
-          <img className="login__icon button" src={headerLogo} alt="Лого"/>
-        </Link>
-        <form className="login__form" onSubmit={handleSubmit} name="register">
-          <h1 className="login__title">Добро пожаловать!</h1>
-          <span className="login__plaseholder">Имя</span>
-          <input className={ errors.name ? 'login__input login__input-active' : 'login__input'}
-          type="text" name="name"
-          id="register-name" placeholder="Имя" 
-          onChange={handleChange} value={values.name || ''} minLength={4} maxLength={16} required />
-          <span className="login__error-active">{errors.name}</span>
-          <span className="login__plaseholder">E-mail</span>
-          <input className={ errors.email ? 'login__input login__input-active' : 'login__input'}
-          type="email" name="email"
-          id="register-email" required value={values.email || ''} onChange={handleChange} minLength={6} maxLength={30} placeholder="Email" />
-          <span className="login__error-active">{errors.email}</span>
-          <span className="login__plaseholder">Пароль</span>
-          <input  className={ errors.password ? "login__input login__input-active" : "login__input"}  
-          type="password" name="password"
-          id="register-password" minLength={8} maxLength={100} required onChange={handleChange}
-           value={values.password || ''} placeholder="Пароль"/>
-          <span className="login__error-active">{errors.password}</span>
-          <button disabled={!isValid ? true : false}
-        className={!isValid  ? "login__button login__buttons login__button_disabled" 
-        : "login__button button login__buttons"} type="submit">Зарегистрироваться</button>
-        </form>
+\
+            <span className="login__plaseholder">E-mail</span>
+            <input
+              name="email"
+              className={`login__input ${errors.email && 'login__input_error'}`}
+              onChange={handleChange}
+              value={values.email || ''}
+              type="email"
+              required
+            />
+            <span className="login__error login__error-activ">{errors.email || ''}</span>
+
+            <span className="login__plaseholder">Пароль</span>
+            <input
+              name="password"
+              className={`login__input ${errors.password && 'login__input_error'}`}
+              onChange={handleChange}
+              value={values.password || ''}
+              type="password"
+              required
+            />
+            <span className="login__error-activ">{errors.password || ''}</span>
+
+        <button
+          type="submit"
+          className={`login__button button ${!isValid && 'login__button_disabled'}`}
+          disabled={!isValid}
+        >
+          Зарегистрироваться
+        </button>
         <p className="login__link">Уже зарегистрированы?
         <Link to={"/signin"} className="login__link-src button" href="#">Войти</Link></p>
+      </form>
       </section>
-      </main>
-    );
+    </main>
+  )
 }
-
-export default Register;

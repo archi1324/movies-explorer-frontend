@@ -1,85 +1,67 @@
-import React from 'react';
-import { Route, Routes} from 'react-router-dom';
-import {useNavigate, useLocation, Navigate} from 'react-router-dom'
 import './App.css';
-
+import api from '../../utils/Api.js';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import { useState, useEffect } from 'react';
+import { Route, Switch, Redirect, useHistory, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
-import Footer from '../Footer/Footer';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import Navigation from '../Navigation/Navigation';
-import PageNotFound from '../PageNotFound/PageNotFound';
+import Profile from '../Profile/Profile';
+import NotFound from '../PageNotFound/PageNotFound';
+import Preloader from '../Preloader/Preloader';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-import * as apiAuth from '../../utils/ApiAuth'
-import api from '../../utils/Api'
-
-
-function App() {
-  
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [loggedIn, setLoggedIn] = React.useState(false);
-  const navigate = useNavigate();
+export default function App() {
+  const history = useHistory();
   const location = useLocation();
-  const [error, setError] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState({text: ''});
-  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [load, setLoad] = useState(false);
+  const [isLoader, setIsLoader] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [savedMoviesList, setSavedMoviesList] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState({text: ''});
 
-  function handleTokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      apiAuth.checkToken(jwt)
+  function handleRegister({ name, email, password }) {
+    setIsLoader(true);
+    api
+      .createUser(name, email, password)
       .then((res) => {
-        setLoggedIn(true);
-        setCurrentUser(res);
-      })
-      .then(() => {navigate(location.pathname)})
-      .catch((err) => { console.log(err)});
-    }
-  }
-
-  React.useEffect(() => {handleTokenCheck()}, [])
-
-  function handleRegister({email, password, name}) {
-    setError(false);
-    return apiAuth
-       .register(email, password, name)
-       .then((res) => {
-         if (res) {
-          console.log(res);
+        if (res) {
+          handleLoginUser({ email, password });
           setErrorMessage({text:''})
-          handleLogin({email, password})
-          navigate('/movies')}
-       })
-       .catch((err) => {
+          history.push('/movies');
+        }
+      })
+      .catch((err) => {
         console.log(err);
         setErrorMessage({text:''});
         setError(true);
         if (err === 'Статус ошибки: 400') {
-          setErrorMessage('При регистрации произошла ошибка');
+          setErrorMessage({text: "Ошибка при регистрации"});
         }
         if (err === 'Статус ошибки: 409') {
-          setErrorMessage('Пользователь с таким email уже существует');
+          setErrorMessage({text: "Пользователь уже существет"});
         }
         if (err === 'Статус ошибки: 500') {
-          setErrorMessage('На сервере что-то не так');
+          setErrorMessage({text: "Что-то с сервером"});
         }
-      });
+      })
+      .finally(() => setIsLoader(false));
   }
 
-  function handleLogin({email, password}) {
-    setError(false);
-    apiAuth.authorise(email, password)
-      .then((data) => {
-        if (data) {
+  function handleLoginUser({ email, password }) {
+    setIsLoader(true);
+    api
+      .login(email, password)
+      .then(jwt => {
+        if (jwt.token) {
+          localStorage.setItem('jwt', jwt.token);
           setLoggedIn(true);
-          localStorage.setItem('jwt', data.token);
-          navigate('/movies');
+          history.push('/movies');
         }
       })
       .catch((err) => {
@@ -87,133 +69,168 @@ function App() {
         setErrorMessage({text:''});
         setError(true);
         if (err === 'Статус ошибки: 401') {
-          setErrorMessage('Ошибка при входе');
+          setErrorMessage({text: "При входе произошла ошибка"});
         }
         if (err === 'Статус ошибки: 500') {
-          setErrorMessage('На сервере что-то не так');
+          setErrorMessage({text: "Что-то с сервером"});
         }
-      });
+      })
+      .finally(() => setIsLoader(false));
   }
 
-  function exit() {
-    localStorage.clear();
+  function handleExit() {
     setCurrentUser({});
     setLoggedIn(false);
-    navigate('/');
+    localStorage.clear();
+    history.push('/');
   }
 
-  React.useEffect(() => {
-    if (loggedIn) {
-      api.getUserInfo()
-        .then((user) => {
-          setCurrentUser(user);
-        })
-        .catch((err) => {console.log(err)});
+  function handleProfile({ name, email }) {
+    setIsLoader(true);
+    api
+      .changeUserInfo(name, email)
+      .then(newUserData => {
+        setCurrentUser(newUserData);
+      })
+      .catch(err =>
+         {
+           console.log(err);
+           setErrorMessage('');
+           setError(true);
+           if (err === 400) { setErrorMessage('Ошибка при обновлении пользователя')}
+           if (err === 409) { setErrorMessage('Пользователь уже существует')}
+           if (err === 500) { setErrorMessage('Ошибка на сервере')}
+        }
+       )
+      .finally(() => setIsLoader(false));
+  }
 
-      api.getSavedMovies()
-        .then((movies) => {
-          setSavedMovies(movies)
+  function handleSaveMovie(movie) {
+    api
+      .createMovie(movie)
+      .then(newMovie => setSavedMoviesList([newMovie, ...savedMoviesList]))
+      .catch((err) => console.log(err));
+  }
+
+  function handleDeleteMovie(movie) {
+    const savedMovie = savedMoviesList.find(
+      (item) => item.movieId === movie.id || item.movieId === movie.movieId
+    );
+    api
+      .deleteMovie(savedMovie._id)
+      .then(() => {
+        const newMoviesList = savedMoviesList.filter(m => {
+          if (movie.id === m.movieId || movie.movieId === m.movieId) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+        setSavedMoviesList(newMoviesList);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    const path = location.pathname;
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      setIsLoader(true);
+      api
+        .getUserInfo()
+        .then(data => {
+          if (data) {
+            setLoggedIn(true);
+            setCurrentUser(data);
+            history.push(path);
+          }
         })
-        .catch((err) => {console.log(err)});
+        .catch((err) => {console.log(err)})
+        .finally(() => {
+          setIsLoader(false);
+          setLoad(true);
+        });
+    } else {
+      setLoad(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      setIsLoader(true);
+      api
+        .getUserInfo()
+        .then((user) => setCurrentUser(user))
+        .catch((err) => {console.log(err)})
+
+        api
+        .getSavedMovies()
+        .then(data => {
+          const UserMoviesList = data.filter(m => m.owner === currentUser._id);
+          setSavedMoviesList(UserMoviesList);
+        })
+        .catch((err) => {console.log(err)})
+        .finally(() => setIsLoader(false));
     }
   }, [loggedIn]);
 
-  function handleLike(movie) {
-    const isSaved = savedMovies.some(c => c.movieId === movie.id);
-    if (!isSaved) {
-      api.saveMovie(movie)
-        .then((newMovie) => {
-          setSavedMovies([...savedMovies, newMovie]);
-        })
-    } else {
-      const id = savedMovies.find(c => c.movieId === movie.id)._id;
-      api.deleteSavedMovie(id)
-        .then(() => {
-          setSavedMovies(res => res.filter(c => c.movieId !== movie.id))
-        })
-        .catch((err) => console.log(err));
-    }
-  };
-
-  function deleteLike(movie) {
-    api.deleteSavedMovie(movie._id)
-      .then(() => {
-        setSavedMovies(res => res.filter(c => c._id !== movie._id))
-      })
-      .catch((err) => console.log(err));
-  };
-
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-    <div className="App">
-        <Routes>
-        <Route>
-          <Route exact path={'/'} element={<>
-            <Header loggedIn={loggedIn} />
-            <Main />
-            <Footer />
-          </>}>
-          </Route>
+    <div className="app">
+      {!load ? (
+        <Preloader isOpen={isLoader} />
+      ) : (
+        <CurrentUserContext.Provider value={currentUser}>
+          <Switch>
+            <Route exact path='/'>
+            <Header/>
+              <Main />
+            </Route>
+            <Route exact path='/signup'>
+              {!loggedIn ? (
+                <Register handleRegister={handleRegister} />
+              ) : (
+                <Redirect to='/' />
+              )}
+            </Route>
+            <Route exact path='/signin'>
+              {!loggedIn ? (
+                <Login handleLoginUser={handleLoginUser} />
+              ) : (
+                <Redirect to='/' />
+              )}
+            </Route>
 
-          <Route exact path={'/movies'} element={
-          <ProtectedRoute loggedIn={loggedIn}>
-            <Navigation/>
-            <Movies  
-            loggedIn={loggedIn}
-            isLogged={loggedIn}  
-            savedMovies={savedMovies}
-            onCardSave={handleLike}/>
-            <Footer />
-          </ProtectedRoute>}>
-          </Route>
-
-          <Route exact path={'/saved-movies'} element={
-          <ProtectedRoute loggedIn={loggedIn} >
-          <>
-            <Navigation loggedIn={loggedIn}/>
-            <SavedMovies 
-            loggedIn={loggedIn}
-            savedMovies={savedMovies}
-            onCardDelete={deleteLike}
+            <ProtectedRoute
+              path='/movies'
+              component={Movies}
+              loggedIn={loggedIn}
+              setIsLoader={setIsLoader}
+              savedMoviesList={savedMoviesList}
+              onLikeClick={handleSaveMovie}
+              onDeleteClick={handleDeleteMovie}
             />
-            <Footer />
-          </>
-          </ProtectedRoute>}>
-          </Route>
-          </Route>
-          
-          <Route exact path={'/signup'} element={ loggedIn 
-                ? <Register onRegister={handleRegister} error={error} text={errorMessage.text}/> 
-                : <Navigate to="/movies" />} /> 
 
-          <Route exact path="/signin" element={ loggedIn 
-                ? <Login onLogin={handleLogin} error={error} text={errorMessage.text}/> 
-                : <Navigate to="/movies" />} />
-
-          <Route exact path={'/profile'} element={
-          <ProtectedRoute
-          loggedIn={loggedIn}>
-          <>
-            <Profile 
-            loggedIn={loggedIn}
-            currentUser = {currentUser}
-            onExit={exit}
+            <ProtectedRoute
+              path='/saved-movies'
+              component={SavedMovies}
+              loggedIn={loggedIn}
+              savedMoviesList={savedMoviesList}
+              onDeleteClick={handleDeleteMovie}
             />
-          </>
-          </ProtectedRoute>}>
-          </Route>
-
-          <Route exact path={'*'} element={
-            <>
-              < PageNotFound />
-            </>}>
-          </Route> 
-
-        </Routes>
-
+            <ProtectedRoute
+              path='/profile'
+              component={Profile}
+              loggedIn={loggedIn}
+              handleProfile={handleProfile}
+              handleSignOut={handleExit}
+            />
+            <Route path='*'>
+              <NotFound />
+            </Route>
+          </Switch>
+          <Preloader isOpen={isLoader} />
+        </CurrentUserContext.Provider>
+      )}
     </div>
-    </CurrentUserContext.Provider>
   );
 }
-
-export default App;

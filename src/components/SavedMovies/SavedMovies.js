@@ -1,66 +1,104 @@
-import React from 'react'
-
+import './SavedMovies.css';
+import { useState, useContext, useEffect } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import './SavedMovies.css'
-import Preloader from '../Preloader/Preloader'
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import Navigation from '../Navigation/Navigation';
+import Footer from  '../Footer/Footer'
 
-function SavedMovies({ savedMovies, onCardDelete }) {
-  const [filteredMovies, setFilteredMovies] = React.useState(savedMovies);
-  const [isShortMovies, setIsShortMovies] = React.useState(false);
-  const [isNotFound, setIsNotFound] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState("");
+export default function SavedMovies({ onDeleteClick, savedMoviesList, setIsInfoTooltip }) {
+  const currentUser = useContext(CurrentUserContext);
 
-  function filterMovies(movies, query) {
-    const moviesByQuery = movies.filter((movie) => {
+  const [shortMovies, setShortMovies] = useState(false); // состояние чекбокса
+  const [NotFound, setNotFound] = useState(false); // если по запросу ничего не найдено - скроем фильмы
+  const [showedMovies, setShowedMovies] = useState(savedMoviesList); // показываемывые фильмы
+  const [filteredMovies, setFilteredMovies] = useState(showedMovies); // отфильтрованные по запросу фильмы
+
+
+  function filterMovies(movies, userQuery, shortMoviesCheckbox) {
+    const moviesByUserQuery = movies.filter((movie) => {
       const movieRu = String(movie.nameRU).toLowerCase().trim();
       const movieEn = String(movie.nameEN).toLowerCase().trim();
-      const userQuery = query.toLowerCase().trim();
-      return (
-        movieRu.indexOf(userQuery) !== -1 || movieEn.indexOf(userQuery) !== -1
-      );
+      const userMovie = userQuery.toLowerCase().trim();
+      return movieRu.indexOf(userMovie) !== -1 || movieEn.indexOf(userMovie) !== -1;
     });
-    return moviesByQuery;
-  }
 
-  function filterDuration(movies) {
-    return movies.filter((movie) => movie.duration < 40);
-  }
-
-  function onSearchMovies(query) {
-    setSearchQuery(query);
-  }
-
-  function handleShortMovies() {
-    setIsShortMovies(!isShortMovies);
-  }
-
-  React.useEffect(() => {
-    const moviesList = filterMovies(savedMovies, searchQuery);
-    setFilteredMovies(isShortMovies ? filterDuration(moviesList) : moviesList);
-  }, [savedMovies, isShortMovies, searchQuery]);
-
-  React.useEffect(() => {
-    if (filteredMovies.length === 0) {
-      setIsNotFound(true);
+    if (shortMoviesCheckbox) {
+      return filterShortMovies(moviesByUserQuery);
     } else {
-      setIsNotFound(false);
+      return moviesByUserQuery;
     }
-  }, [filteredMovies]);
+  }
 
-    return (
-        <main className='savedMovies'>
-            <SearchForm 
-             onSearchMovies={onSearchMovies}
-             onFilter={handleShortMovies}/>
-            <MoviesCardList 
-            cards={filteredMovies}
-          isSavedFilms={true}
-          isNotFound={isNotFound}
-          savedMovies={savedMovies}
-          onCardDelete={onCardDelete}/>
-        </main>
-    )
+  // фильтрация по длительности
+  function filterShortMovies(movies) {
+    return movies.filter(movie => movie.duration < 40);
+  }
+
+  // поиск по запросу
+  function handleSearchSubmit(inputValue) {
+    const moviesList = filterMovies(savedMoviesList, inputValue, shortMovies);
+    if (moviesList.length === 0) {
+      setNotFound(true);
+      setIsInfoTooltip({
+        isOpen: true,
+        successful: false,
+        text: 'Ничего не найдено.',
+      });
+    } else {
+      setNotFound(false);
+      setFilteredMovies(moviesList);
+      setShowedMovies(moviesList);
+    }
+  }
+
+  // состояние чекбокса
+  function handleShortFilms() {
+    if (!shortMovies) {
+      setShortMovies(true);
+      localStorage.setItem(`${currentUser.email} - shortSavedMovies`, true);
+      setShowedMovies(filterShortMovies(filteredMovies));
+      filterShortMovies(filteredMovies).length === 0 ? setNotFound(true) : setNotFound(false);
+    } else {
+      setShortMovies(false);
+      localStorage.setItem(`${currentUser.email} - shortSavedMovies`, false);
+      filteredMovies.length === 0 ? setNotFound(true) : setNotFound(false);
+      setShowedMovies(filteredMovies);
+    }
+  }
+
+  // проверка чекбокса в локальном хранилище
+  useEffect(() => {
+    if (localStorage.getItem(`${currentUser.email} - shortSavedMovies`) === 'true') {
+      setShortMovies(true);
+      setShowedMovies(filterShortMovies(savedMoviesList));
+    } else {
+      setShortMovies(false);
+      setShowedMovies(savedMoviesList);
+    }
+  }, [savedMoviesList, currentUser]);
+
+  useEffect(() => {
+    setFilteredMovies(savedMoviesList);
+    savedMoviesList.length !== 0 ? setNotFound(false) : setNotFound(true);
+  }, [savedMoviesList]);
+
+  return (
+    <main className="saved-movies">
+      <Navigation/>
+      <SearchForm
+        handleSearchSubmit={handleSearchSubmit}
+        handleShortFilms={handleShortFilms}
+        shortMovies={shortMovies}
+      />
+      {!NotFound && (
+        <MoviesCardList
+          moviesList={showedMovies}
+          savedMoviesList={savedMoviesList}
+          onDeleteClick={onDeleteClick}
+        />
+      )}
+      <Footer/>
+    </main>
+  );
 }
-
-export default SavedMovies;

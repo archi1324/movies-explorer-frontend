@@ -1,13 +1,13 @@
 .movies{
-    padding-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .movies_open{
-    opacity: 0.3;
+  opacity: 0.3;
 }
 
 @media screen and (max-width: 424px) {
-    .movies{
-        padding-bottom: 34px;
-    }
+  .movies{
+      padding-bottom: 34px;
+  }
 }

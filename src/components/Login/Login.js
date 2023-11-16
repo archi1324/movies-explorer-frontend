@@ -1,53 +1,71 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import headerLogo from '../../images/headerLogo.svg';
+import useFormWithValidation  from "../../hooks/useFormWithValidation";
+import '../Register/Register'
 
-function Login(props) {
-  const [values, errors, isValid, handleChange] = useFormWithValidation();
+export default function Login({ handleLoginUser }) {
 
-function handleSubmit(evt) {
-    evt.preventDefault();
-    props.onLogin(values)
-}
+  const { values, handleChange, isValid,errors } = useFormWithValidation();
 
-    return (
-      <main>
-        <section className="login">
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleLoginUser(values);
+  }
+
+  return (
+    <main>
+      <section className="login">
       <Link to={"/"}>
         <img className="login__icon button" src={headerLogo} alt="Лого"/>
       </Link>
-      <form className="login__form"  name="login" onSubmit={handleSubmit}>
-        <h1 className="login__title">Рады видеть!</h1>
-        <span className="login__plaseholder">E-mail</span>
-        <input className={ errors.email ? 'login__input login__input-active' : 'login__input'} 
-        type="email" name="email"
-        id="login-email" 
-        minLength={8} maxLength={100} 
-        placeholder="Email" value={values.email || ''}
-        onChange={handleChange}
-        pattern='^.+@.+\..+$'
-        required/>
-        <span className="login__error-active">{errors.email}</span>
-        <span className="login__plaseholder">Пароль</span>
-        <input className={ errors.password ? "login__input login__input-active" : "login__input"} 
-        type="password" name="password"
-        id="login-password"
-        minLength={8} maxLength={20} 
-        placeholder="Пароль" value={values.password || ''} 
-        onChange={handleChange}
-        required/>
-        <span className="login__error-active">{errors.password}</span>
-        <button disabled={!isValid ? true : false}
-        className={!isValid  ? "login__button login__buttons login__button_disabled" 
-        : "login__button button login__buttons"}
-        type="submit">Войти</button>
-      </form>
-      <p className="login__link">Еще не зарегистрированы?
-      <Link to={"/signup"} className="login__link-src button" href="#">Регистрация</Link></p>
-    </section>
-    </main>
-    )
-}
+      <form
+        className="login__form"
+        name="login"
+        noValidate
+        onSubmit={handleSubmit}
+      >
 
-export default Login;
+        <h1 className="login__title">Рады видеть!</h1>
+            <span className="login__plaseholder">E-mail</span>
+            <input
+              name="email"
+              className={`login__input ${errors.email && 'login__input_error'}`}
+              onChange={handleChange}
+              value={values.email || ''}
+              type="email"
+              minLength={8}
+              maxLength={200}
+              required
+            />
+            <span className="login__error-activ">{errors.email || ''}</span>
+
+            <span className="login__plaseholder">Пароль</span>
+            <input
+              name="password"
+              className={`login__input ${
+                errors.password && 'login__input_error'
+              }`}
+              onChange={handleChange}
+              value={values.password || ''}
+              type="password"
+              minLength={8}
+              maxLength={200}
+              required
+            />
+            <span className="login__error-activ">{errors.password || ''}</span>
+
+        <button
+          type="submit"
+          className={`login__button button login__buttons ${!isValid && 'login__button_disabled'}`}
+          disabled={!isValid}
+        >
+          Войти
+        </button>
+        <p className="login__link">Еще не зарегистрированы?
+      <Link to={"/signup"} className="login__link-src button" href="#">Регистрация</Link></p>
+      </form>
+      </section>
+    </main>
+  );
+}

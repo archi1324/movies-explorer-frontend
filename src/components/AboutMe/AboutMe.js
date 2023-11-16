@@ -12,8 +12,8 @@ function AboutMe(props) {
                 <div className='aboutMe__info'>
                     <h3 className='aboutMe__name'>Артур</h3>
                     <p className='aboutMe__description'>Фронтенд-разработчик, 23 года</p>
-                    <p className='aboutMe__text'>Я родился и живу в Уфе, закончил факультет информатики и робототехники 
-                    УГАТУ.Я люблю слушать музыку, кататься на сноуборде а ещё увлекаюсь плаванием. 
+                    <p className='aboutMe__text'>Я родился и живу в Уфе, закончил факультет информатики и робототехники
+                    УГАТУ.Я люблю слушать музыку, кататься на сноуборде а ещё увлекаюсь плаванием.
                     После того, как пройду курс по веб-разработке, планирую и дальше развиваться в этой сфере</p>
                     <a className='aboutMe__git' href='https://github.com/archi1324' target="_blank" rel="noreferrer" >Github</a>
                 </div>
