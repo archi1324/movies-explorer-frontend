@@ -5,3 +5,5 @@
 бэкенд сайта : http://api.movies.sayahov.nomoredomainsrocks.ru/
 ip сайта : 51.250.109.186
 фронтенд сайта :  http://movies.sayahov.nomoredomainsrocks.ru
+
+ссылка на pull request : https://github.com/archi1324/movies-explorer-frontend/pull/2
