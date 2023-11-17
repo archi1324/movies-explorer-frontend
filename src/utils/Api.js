@@ -13,6 +13,7 @@ class Api {
 
 getUserInfo() {
   return fetch(`${this._baseUrl}/users/me`, {
+    mode: 'no-cors',
     headers: {
       authorization: `Bearer ${localStorage.getItem('jwt')}`,
     },
@@ -21,6 +22,7 @@ getUserInfo() {
 
   createUser(name, email, password) {
     return fetch(`${this._baseUrl}/signup`, {
+      mode: 'no-cors',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -33,6 +35,7 @@ getUserInfo() {
 
   login(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
+      mode: 'no-cors',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -41,6 +44,7 @@ getUserInfo() {
 
   changeUserInfo(name, email) {
     return fetch(`${this._baseUrl}/users/me`, {
+      mode: 'no-cors',
       method: 'PATCH',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -52,6 +56,7 @@ getUserInfo() {
 
   getSavedMovies() {
     return fetch(`${this._baseUrl}/movies`, {
+      mode: 'no-cors',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
       },
@@ -60,6 +65,7 @@ getUserInfo() {
 
   createMovie(data) {
     return fetch(`${this._baseUrl}/movies`, {
+      mode: 'no-cors',
       method: 'POST',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -83,6 +89,7 @@ getUserInfo() {
 
   deleteMovie(data) {
     return fetch(`${this._baseUrl}/movies/${data}`, {
+      mode: 'no-cors',
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${localStorage.getItem('jwt')}`,
@@ -93,7 +100,7 @@ getUserInfo() {
 
 const api = new Api({
 
-  baseUrl: 'http://api.movies.sayahov.nomoredomainsrocks.ru',
+  baseUrl: 'https://api.movies.sayahov.nomoredomainsrocks.ru',
 });
 
 export default api;
