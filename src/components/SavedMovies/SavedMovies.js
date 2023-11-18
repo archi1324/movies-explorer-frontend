@@ -6,7 +6,7 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 import Navigation from '../Navigation/Navigation';
 import Footer from  '../Footer/Footer'
 
-export default function SavedMovies({ onDeleteClick, savedMoviesList, setIsInfoTooltip }) {
+export default function SavedMovies({ onDeleteClick, savedMoviesList}) {
   const currentUser = useContext(CurrentUserContext);
 
   const [shortMovies, setShortMovies] = useState(false); // состояние чекбокса
@@ -40,11 +40,6 @@ export default function SavedMovies({ onDeleteClick, savedMoviesList, setIsInfoT
     const moviesList = filterMovies(savedMoviesList, inputValue, shortMovies);
     if (moviesList.length === 0) {
       setNotFound(true);
-      setIsInfoTooltip({
-        isOpen: true,
-        successful: false,
-        text: 'Ничего не найдено.',
-      });
     } else {
       setNotFound(false);
       setFilteredMovies(moviesList);

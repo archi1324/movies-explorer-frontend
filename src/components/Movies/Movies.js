@@ -14,6 +14,7 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
   const [initialMovies, setInitialMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [error, setError] = useState('');
+  const [NotFound, setNotFound] = useState(false);
   const [allMovies, setAllMovies] = useState([]);
 
   function filterShortMovies(movies) {
@@ -34,7 +35,6 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
   }
 
   function filterMovies(movies, userQuery, shortMoviesCheckbox) {
-    setError('');
     const moviesByUserQuery = movies.filter((movie) => {
       const movieRu = String(movie.nameRU).toLowerCase().trim();
       const movieEn = String(movie.nameEN).toLowerCase().trim();
@@ -49,11 +49,11 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
   }
 
   function setFiltered(movies, userQuery, shortMoviesCheckbox) {
-    setError('');
     const moviesList = filterMovies(movies, userQuery, shortMoviesCheckbox);
-    if (moviesList.length === 0)
-    {
-      {setError('Ничего не найдено')};
+    if (moviesList.length === 0){
+    setNotFound(true);
+    } else {
+      setNotFound(false);
     }
     setInitialMovies(moviesList);
     setFilteredMovies(
@@ -66,7 +66,6 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
   }
 
   function searchSubmit(inputValue) {
-    setError('');
     localStorage.setItem(`${currentUser.email} - movieSearch`, inputValue);
     localStorage.setItem(`${currentUser.email} - shortMovies`, shorts);
     if (allMovies.length === 0) {
@@ -89,7 +88,6 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
   }
 
   function statusCheckbox() {
-    setError('');
     setShorts(!shorts);
     if (!shorts) {
       setFilteredMovies(filterShortMovies(initialMovies));
@@ -117,7 +115,9 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
         localStorage.getItem(`${currentUser.email} - shortMovies`) === 'true'
       ) {
         setFilteredMovies(filterShortMovies(movies));
-      } else {
+      } 
+      
+      else {
         setFilteredMovies(movies);
       }
     }
@@ -131,12 +131,14 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
         handleShortFilms={statusCheckbox}
         shortMovies={shorts}
       />
-        <MoviesCardList
+      {!NotFound && (<MoviesCardList
+          error={error}
           moviesList={filteredMovies}
           savedMoviesList={savedMoviesList}
           onLikeClick={onLikeClick}
           onDeleteClick={onDeleteClick}
         />
+        )}
       <Footer/>
     </main>
   );

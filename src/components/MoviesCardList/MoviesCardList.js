@@ -2,14 +2,14 @@ import './MoviesCardList.css';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
-
+import { SCREEN_PARAMS } from '../../utils/constants.js';
 
 export default function MoviesCardList({ moviesList, savedMoviesList, onLikeClick, onDeleteClick }) {
 
   const [isMount, setIsMount] = useState(true);
   const [showMovieList, setShowMovieList] = useState([]);
   const [cardsWidth, setCardsWidth] = useState({});
-
+  const { desktop, tablet, mobile } = SCREEN_PARAMS;
   const location = useLocation();
 
 
@@ -21,16 +21,16 @@ export default function MoviesCardList({ moviesList, savedMoviesList, onLikeClic
 
   useEffect(() => {
     const width = window.innerWidth;
-      if (width > 1024) {
-        setCardsWidth({ total: 12, more: 4,});
-      } else if (width < 1024) {
-        setCardsWidth({total: 8, more: 2,});
+      if (width > desktop.width) {
+        setCardsWidth(desktop.cards);
+      } else if (width < desktop.width) {
+        setCardsWidth(tablet.cards);
       } else {
-        setCardsWidth({total: 8, more: 2,});
+        setCardsWidth(mobile.cards);
       }
       return () => setIsMount(false);
     }
-  ,[isMount]);
+  ,[isMount,desktop, tablet, mobile]);
 
   useEffect(() => {
     if (moviesList.length) {

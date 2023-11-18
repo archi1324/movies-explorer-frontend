@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 18px 70px 18px 70px;
+  font-family: 'inter';
 }
 
 .navigation__menu {

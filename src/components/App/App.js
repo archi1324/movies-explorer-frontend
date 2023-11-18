@@ -13,6 +13,7 @@ import Profile from '../Profile/Profile';
 import NotFound from '../PageNotFound/PageNotFound';
 import Preloader from '../Preloader/Preloader';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Footer from '../Footer/Footer';
 
 export default function App() {
   const history = useHistory();
@@ -22,8 +23,8 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [savedMoviesList, setSavedMoviesList] = useState([]);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState({text: ''});
+  const [setError] = useState(false);
+  const [setErrorMessage] = useState({ text: '' });
 
   function handleRegister({ name, email, password }) {
     setIsLoader(true);
@@ -32,22 +33,21 @@ export default function App() {
       .then((res) => {
         if (res) {
           handleLoginUser({ email, password });
-          setErrorMessage({text:''})
+          setErrorMessage({ text: '' })
           history.push('/movies');
         }
       })
       .catch((err) => {
-        console.log(err);
-        setErrorMessage({text:''});
+        setErrorMessage({ text: '' });
         setError(true);
         if (err === 'Статус ошибки: 400') {
-          setErrorMessage({text: "Ошибка при регистрации"});
+          setErrorMessage({ text: "Ошибка при регистрации" });
         }
         if (err === 'Статус ошибки: 409') {
-          setErrorMessage({text: "Пользователь уже существет"});
+          setErrorMessage({ text: "Пользователь уже существет" });
         }
         if (err === 'Статус ошибки: 500') {
-          setErrorMessage({text: "Что-то с сервером"});
+          setErrorMessage({ text: "Что-то с сервером" });
         }
       })
       .finally(() => setIsLoader(false));
@@ -65,14 +65,13 @@ export default function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
-        setErrorMessage({text:''});
+        setErrorMessage({ text: '' });
         setError(true);
         if (err === 'Статус ошибки: 401') {
-          setErrorMessage({text: "При входе произошла ошибка"});
+          setErrorMessage({ text: "При входе произошла ошибка" });
         }
         if (err === 'Статус ошибки: 500') {
-          setErrorMessage({text: "Что-то с сервером"});
+          setErrorMessage({ text: "Что-то с сервером" });
         }
       })
       .finally(() => setIsLoader(false));
@@ -92,16 +91,14 @@ export default function App() {
       .then(newUserData => {
         setCurrentUser(newUserData);
       })
-      .catch(err =>
-         {
-           console.log(err);
-           setErrorMessage('');
-           setError(true);
-           if (err === 400) { setErrorMessage('Ошибка при обновлении пользователя')}
-           if (err === 409) { setErrorMessage('Пользователь уже существует')}
-           if (err === 500) { setErrorMessage('Ошибка на сервере')}
-        }
-       )
+      .catch(err => {
+        setErrorMessage('');
+        setError(true);
+        if (err === 400) { setErrorMessage('Ошибка при обновлении пользователя') }
+        if (err === 409) { setErrorMessage('Пользователь уже существует') }
+        if (err === 500) { setErrorMessage('Ошибка на сервере') }
+      }
+      )
       .finally(() => setIsLoader(false));
   }
 
@@ -145,7 +142,7 @@ export default function App() {
             history.push(path);
           }
         })
-        .catch((err) => {console.log(err)})
+        .catch((err) => { console.log(err) })
         .finally(() => {
           setIsLoader(false);
           setLoad(true);
@@ -161,18 +158,23 @@ export default function App() {
       api
         .getUserInfo()
         .then((user) => setCurrentUser(user))
-        .catch((err) => {console.log(err)})
-
-        api
-        .getSavedMovies()
-        .then(data => {
-          const UserMoviesList = data.filter(m => m.owner === currentUser._id);
-          setSavedMoviesList(UserMoviesList);
-        })
-        .catch((err) => {console.log(err)})
+        .catch((err) => { console.log(err) })
         .finally(() => setIsLoader(false));
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn && currentUser) {
+  api
+  .getSavedMovies()
+  .then(data => {
+    const UserMoviesList = data.filter(m => m.owner === currentUser._id);
+    setSavedMoviesList(UserMoviesList);
+  })
+  .catch((err) => { console.log(err) })
+  .finally(() => setIsLoader(false));
+  }
+  }, [currentUser, loggedIn]);
 
   return (
     <div className="app">
@@ -182,8 +184,9 @@ export default function App() {
         <CurrentUserContext.Provider value={currentUser}>
           <Switch>
             <Route exact path='/'>
-            <Header/>
+              <Header  loggedIn={loggedIn}/>
               <Main />
+              <Footer/>
             </Route>
             <Route exact path='/signup'>
               {!loggedIn ? (

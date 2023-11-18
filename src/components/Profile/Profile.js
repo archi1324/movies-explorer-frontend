@@ -1,11 +1,11 @@
 import './Profile.css';
 import { useEffect, useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import useFormWithValidation  from "../../hooks/useFormWithValidation";
+import useFormWithValidation from "../../hooks/useFormWithValidation";
 import Navigation from '../Navigation/Navigation';
 
 export default function Profile({ handleSignOut, handleProfile }) {
-  const { values, handleChange, isValid, resetForm,errors } = useFormWithValidation();
+  const { values, handleChange, isValid, resetForm, errors } = useFormWithValidation();
   const currentUser = useContext(CurrentUserContext); // подписка на контекст
 
   function handleSubmit(e) {
@@ -23,13 +23,13 @@ export default function Profile({ handleSignOut, handleProfile }) {
 
   return (
     <div className="app">
-    <Navigation />
-    <form className="profile"name="profile" noValidate onSubmit={handleSubmit}>
+      <Navigation />
+      <form className="profile" name="profile" noValidate onSubmit={handleSubmit}>
 
         <h1 className="profile__title">{`Привет, ${currentUser.name || ''}!`}</h1>
         <div className="profile__list">
 
-        <div className="profile__container">
+          <div className="profile__container">
             <span className="profile__item profile__span">Имя</span>
             <input
               name="name"
@@ -42,21 +42,22 @@ export default function Profile({ handleSignOut, handleProfile }) {
               maxLength="30"
               pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
             />
-        </div>
-        <span className="profile__error">{errors.name || ''}</span>
+          </div>
+          <span className="profile__error">{errors.name || ''}</span>
 
-        <div className="profile__container">
+          <div className="profile__container">
             <span className="profile__item profile__span">E-mail</span>
             <input
               name="email"
               className={`profile__input ${errors.email && 'profile__input_error'}`}
               onChange={handleChange}
               value={values.email || ''}
+              pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$"
               type="email"
               required
             />
-        </div>
-        <span className='profile__error'>{errors.email || ''}</span>
+          </div>
+          <span className='profile__error'>{errors.email || ''}</span>
         </div>
         <div className="profile__buttons">
           <button
@@ -66,11 +67,11 @@ export default function Profile({ handleSignOut, handleProfile }) {
           >
             Редактировать
           </button>
-          <div className= "profile__button-container" onClick={handleSignOut}>
-          <div className="profile__button profile__button-ex button" >Выйти из аккаунта</div>
+          <div className="profile__button-container" onClick={handleSignOut}>
+            <div className="profile__button profile__button-ex button" >Выйти из аккаунта</div>
+          </div>
         </div>
-        </div>
-    </form>
+      </form>
     </div>
   );
 }

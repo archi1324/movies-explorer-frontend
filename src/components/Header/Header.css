@@ -3,6 +3,7 @@
   justify-content: space-between;
   background-color: #073042;
   padding: 18px 70px 18px 70px;
+  font-family: 'inter';
 }
 
 .header__menu {
@@ -61,35 +62,35 @@
 
 @media screen and (max-width: 768px) {
   .header {
-      padding: 18px 30px 18px 30px;
+    padding: 18px 30px 18px 30px;
   }
 
   .header__menu {
-      margin-top: -5px;
-      margin-right: 1px;
+    margin-top: -5px;
+    margin-right: 1px;
   }
 }
 
 @media screen and (max-width: 424px) {
   .header {
-      padding: 18px 14px 18px 14px;
+    padding: 18px 14px 18px 14px;
   }
 
   .header__menu:last-of-type {
-      padding-right: 0px;
+    padding-right: 0px;
   }
 
   .header__menu {
-      gap: 14px;
+    gap: 14px;
   }
 
   .header__register {
-      font-size: 10px;
+    font-size: 10px;
   }
 
   .header__login {
-      font-size: 10px;
-      width: 54px;
-      height: 26px;
+    font-size: 10px;
+    width: 54px;
+    height: 26px;
   }
 }

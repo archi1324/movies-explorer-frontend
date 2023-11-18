@@ -1,6 +1,7 @@
 .aboutMe {
   padding: 110px 70px 0 70px;
   background-color: #202020;
+  font-family: 'inter';
 }
 
 .aboutMe__tittle {
@@ -90,90 +91,90 @@
 
 @media screen and (max-width: 768px) {
   .aboutMe {
-      padding: 90px 50px 0 50px;
+    padding: 90px 50px 0 50px;
 
   }
 
   .aboutMe__info {
-      max-width: 348px;
+    max-width: 348px;
   }
 
   .aboutMe__name {
-      font-size: 40px;
-      line-height: 40px;
-      word-break: break-all;
+    font-size: 40px;
+    line-height: 40px;
+    word-break: break-all;
   }
 
   .aboutMe__description {
-      font-size: 12px;
-      line-height: 18px;
-      padding-top: 16px;
-      word-break: break-all;
+    font-size: 12px;
+    line-height: 18px;
+    padding-top: 16px;
+    word-break: break-all;
   }
 
   .aboutMe__text {
-      font-size: 12px;
-      line-height: 18px;
-      padding-top: 20px;
-      padding-bottom: 105px;
+    font-size: 12px;
+    line-height: 18px;
+    padding-top: 20px;
+    padding-bottom: 105px;
   }
 
   .aboutMe__photo {
-      width: 256px;
-      height: 307px;
+    width: 256px;
+    height: 307px;
   }
 }
 
 @media screen and (max-width: 560px) {
   .aboutMe__photo {
-      margin: 0 auto;
-      padding-top: 60px;
+    margin: 0 auto;
+    padding-top: 60px;
   }
 }
 
 @media screen and (max-width: 424px) {
   .aboutMe {
-      padding: 70px 14px 0 14px;
+    padding: 70px 14px 0 14px;
   }
 
   .aboutMe__tittle {
-      font-size: 18px;
-      line-height: 22px;
-      padding-bottom: 28px;
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
   }
 
   .aboutMe__info {
-      max-width: 292px;
+    max-width: 292px;
   }
 
   .aboutMe__name {
-      font-size: 30px;
-      line-height: 36px;
-      padding-top: 38px;
+    font-size: 30px;
+    line-height: 36px;
+    padding-top: 38px;
   }
 
   .aboutMe__description {
-      font-size: 11px;
-      line-height: 16px;
-      padding-top: 20px;
+    font-size: 11px;
+    line-height: 16px;
+    padding-top: 20px;
   }
 
   .aboutMe__text {
-      font-size: 11px;
-      line-height: 16px;
-      padding-bottom: 40px;
+    font-size: 11px;
+    line-height: 16px;
+    padding-bottom: 40px;
   }
 
   .aboutMe__photo {
-      padding-top: 60px;
-      width: 290px;
-      height: 352px;
-      margin: 0 auto;
+    padding-top: 60px;
+    width: 290px;
+    height: 352px;
+    margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 560px) {
   .aboutMe__components {
-      flex-direction: column-reverse;
+    flex-direction: column-reverse;
   }
 }

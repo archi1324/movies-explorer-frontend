@@ -7,16 +7,16 @@ import './Popup.css'
 
 function Popup({ onClick, isOpen, onClose }) {
 
-    const PopupButton = `navigation__popup-visible ${isOpen ? 'navigation__popup-hidden' : 'navigation__popup-visible'}`;
+    const popupButton = `navigation__popup-visible ${isOpen ? 'navigation__popup-hidden' : 'navigation__popup-visible'}`;
 
-    const PopupActive = `navigation__popup-open ${isOpen ? 'navigation__popup-open_active' : ' '}`;
+    const popupActive = `navigation__popup-open ${isOpen ? 'navigation__popup-open_active' : ' '}`;
 
     return (
         <>
-            <button className={PopupButton}
+            <button className={popupButton}
                 onClick={onClick}
             />
-            <div className={PopupActive}>
+            <div className={popupActive}>
                 <button className="navigation__popup-close" onClick={onClose} />
                 <nav className="navigation__popup-links">
                     <Link className={({ isActive }) =>

@@ -20,38 +20,37 @@ export default function MoviesCard({ movie, saved, onLikeClick, onDeleteClick })
 
   return (
     <li className="moviesCard">
-        <a target="_blank" rel="noreferrer" href={movie.trailerLink}>
-          <img
-            src={movie.image}
-            alt={movie.nameRU}
-            title={`Описание: ${movie.description}`}
-            className="moviesCard__image"
-          />
-        </a>
-        <div className="moviesCard__container">
-          <h2 className="moviesCard__title">{movie.nameRU}</h2>
-          {location.pathname === '/movies' && (
-            <button
-              type="button"
-              className={`moviesCard__button moviesCard__button_type_${
-                saved ? 'saved' : 'save'
+      <a target="_blank" rel="noreferrer" href={movie.trailerLink}>
+        <img
+          src={movie.image}
+          alt={movie.nameRU}
+          title={`Описание: ${movie.description}`}
+          className="moviesCard__image"
+        />
+      </a>
+      <div className="moviesCard__container">
+        <h2 className="moviesCard__title">{movie.nameRU}</h2>
+        {location.pathname === '/movies' && (
+          <button
+            type="button"
+            className={`moviesCard__button moviesCard__button_type_${saved ? 'saved' : 'save'
               }`}
-              onClick={saved ? handleDelete : handleLike}
-            ></button>
-          )}
-          {location.pathname === '/saved-movies' && (
-            <button
-              type="button"
-              className="moviesCard__button moviesCard__button_type_unsave"
-              onClick={handleDelete}
-              aria-label="Удалить фильм из сохранённых"
-              title="Удалить фильм из сохранённых"
-            ></button>
-          )}
-        </div>
-        <span className="moviesCard__time">
-          {transformDuration(movie.duration)}
-        </span>
+            onClick={saved ? handleDelete : handleLike}
+          ></button>
+        )}
+        {location.pathname === '/saved-movies' && (
+          <button
+            type="button"
+            className="moviesCard__button moviesCard__button_type_unsave"
+            onClick={handleDelete}
+            aria-label="Удалить фильм из сохранённых"
+            title="Удалить фильм из сохранённых"
+          ></button>
+        )}
+      </div>
+      <span className="moviesCard__time">
+        {transformDuration(movie.duration)}
+      </span>
     </li>
   );
 }

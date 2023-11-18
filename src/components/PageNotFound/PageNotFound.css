@@ -1,6 +1,7 @@
 .pageNotFound {
   background-color: #202020;
   padding-top: 246px;
+  font-family: 'inter';
 }
 
 .pageNotFound__container {
@@ -50,28 +51,28 @@
 
 @media screen and (max-width: 768px) {
   .pageNotFound {
-      padding-top: 408px;
+    padding-top: 408px;
   }
 }
 
 @media screen and (max-width: 424px) {
   .pageNotFound {
-      padding-top: 329px;
+    padding-top: 329px;
   }
 
   .pageNotFound__title {
-      font-size: 80px;
-      line-height: 97px;
+    font-size: 80px;
+    line-height: 97px;
   }
 
   .pageNotFound__subtitle {
-      font-size: 12px;
-      line-height: 15px;
+    font-size: 12px;
+    line-height: 15px;
   }
 
   .pageNotFound__link {
-      font-size: 12px;
-      line-height: 15px;
-      padding-top: 283px;
+    font-size: 12px;
+    line-height: 15px;
+    padding-top: 283px;
   }
 }

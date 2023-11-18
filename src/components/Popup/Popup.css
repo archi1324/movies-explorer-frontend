@@ -10,6 +10,7 @@
   height: 44px;
   width: 100%;
   cursor: pointer;
+  font-family: 'inter';
 }
 
 .navigation__popup-visible:hover {

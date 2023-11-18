@@ -5,9 +5,10 @@ import './PageNotFound.css';
 function PageNotFound() {
 
 const history = useHistory();
-	const goBack = () => {
-		history(-1);
-	}
+
+function goBack() {
+    history.goBack();
+  }
 
     return (
         <main>
@@ -15,7 +16,7 @@ const history = useHistory();
             <div className='pageNotFound__container'>
                 <h1 className='pageNotFound__title'>404</h1>
                 <p className='pageNotFound__subtitle'>Страница не найдена</p>
-                <p onClick={goBack} className='pageNotFound__link' onclick="history.back()">Назад</p>
+                <p className='pageNotFound__link' onClick={goBack}>Назад</p>
             </div>
         </section>
         </main>

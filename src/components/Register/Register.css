@@ -2,6 +2,7 @@
   width: 100%;
   max-width: 396px;
   margin: 70px auto;
+  font-family: 'inter';
 }
 
 .login__icon {

@@ -1,3 +1,5 @@
+import { BASE_URL } from './constants.js';
+
 class Api {
   constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
@@ -9,15 +11,15 @@ class Api {
     } else {
       return Promise.reject(res.status);
     }
-}
+  }
 
-getUserInfo() {
-  return fetch(`${this._baseUrl}/users/me`, {
-    headers: {
-      authorization: `Bearer ${localStorage.getItem('jwt')}`,
-    },
-  }).then(res => this._checkResponse(res));
-}
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    }).then(res => this._checkResponse(res));
+  }
 
   createUser(name, email, password) {
     return fetch(`${this._baseUrl}/signup`, {
@@ -93,7 +95,7 @@ getUserInfo() {
 
 const api = new Api({
 
-  baseUrl: 'https://api.movies.sayahov.nomoredomainsrocks.ru',
+  baseUrl: BASE_URL,
 });
 
 export default api;

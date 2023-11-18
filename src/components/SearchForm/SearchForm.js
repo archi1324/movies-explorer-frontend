@@ -10,7 +10,7 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 export default function SearchForm({ handleSearchSubmit, handleShortFilms, shortMovies }) {
   const currentUser = useContext(CurrentUserContext);
   const location = useLocation();
-  const { values, handleChange, isValid, setIsValid } = useFormWithValidation();
+  const { values, handleChange, resetForm, isValid, setIsValid, resetCheckBox } = useFormWithValidation();
 
   const [errorQuery, setErrorQuery] = useState('');
 
@@ -27,6 +27,10 @@ export default function SearchForm({ handleSearchSubmit, handleShortFilms, short
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
+
   return (
     <div className="searchForm">
     <section className="search">
@@ -42,6 +46,7 @@ export default function SearchForm({ handleSearchSubmit, handleShortFilms, short
           onChange={handleChange}
           required
         />
+        <span className="search__error">{errorQuery}</span>
         <button className="search__button" type="submit" aria-label="найти"></button>
         </div>
       </form>

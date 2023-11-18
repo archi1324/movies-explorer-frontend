@@ -42,43 +42,43 @@
 
 @media screen and (max-width: 779px) {
   .movieCardList {
-      padding: 0px 30px 0 30px;
+    padding: 0px 30px 0 30px;
   }
 
   .movieCardList__container {
-      grid-template-columns: repeat(2, 1fr);
-      row-gap: 24px;
-      column-gap: 30px;
-      padding-top: 80px;
-      margin-bottom: -28px;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 24px;
+    column-gap: 30px;
+    padding-top: 80px;
+    margin-bottom: -28px;
   }
 
   .movies__button {
-      margin-top: 84px;
+    margin-top: 84px;
   }
 
-  .movieCardList__button-save{
-      margin-top: 59px;
+  .movieCardList__button-save {
+    margin-top: 59px;
   }
 }
 
 @media screen and (max-width: 424px) {
   .movieCardList {
-      padding: 88px 10px 0 10px;
-      margin: 0 auto;
-      max-width: 320px;
+    padding: 88px 10px 0 10px;
+    margin: 0 auto;
+    max-width: 320px;
   }
 
   .movieCardList__container {
-      padding: 40px 0px 10px;
-      grid-template-columns: repeat(auto-fit, 300px);
-      row-gap: 21px;
-      justify-content: center;
-      margin: 0px 0 0 10px;
+    padding: 40px 0px 10px;
+    grid-template-columns: repeat(auto-fit, 300px);
+    row-gap: 21px;
+    justify-content: center;
+    margin: 0px 0 0 10px;
   }
 
   .movies__button {
-      width: 240px;
-      margin-top: 48px;
+    width: 240px;
+    margin-top: 48px;
   }
 }
