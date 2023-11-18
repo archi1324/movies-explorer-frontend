@@ -1,17 +1,23 @@
 import './Profile.css';
-import { useEffect, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import useFormWithValidation from "../../hooks/useFormWithValidation";
 import Navigation from '../Navigation/Navigation';
 
-export default function Profile({ handleSignOut, handleProfile }) {
+export default function Profile({ handleSignOut, handleProfile, profileMessage }) {
   const { values, handleChange, isValid, resetForm, errors } = useFormWithValidation();
+  const [profileMessageText, setProfileMessageText] = useState('');
   const currentUser = useContext(CurrentUserContext); // подписка на контекст
 
   function handleSubmit(e) {
     e.preventDefault();
     handleProfile(values);
   }
+
+  useEffect(() => {
+    setProfileMessageText(profileMessage);
+  }, [profileMessage]);
+
 
   useEffect(() => {
     if (currentUser) {
@@ -58,6 +64,7 @@ export default function Profile({ handleSignOut, handleProfile }) {
             />
           </div>
           <span className='profile__error'>{errors.email || ''}</span>
+          <span className="profile__error-text">{profileMessageText}</span>
         </div>
         <div className="profile__buttons">
           <button

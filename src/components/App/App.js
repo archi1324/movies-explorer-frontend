@@ -22,6 +22,7 @@ export default function App() {
   const [isLoader, setIsLoader] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [profileMessage, setProfileMessage] = useState('');
   const [savedMoviesList, setSavedMoviesList] = useState([]);
   const [setError] = useState(false);
   const [setErrorMessage] = useState({ text: '' });
@@ -90,6 +91,7 @@ export default function App() {
       .changeUserInfo(name, email)
       .then(newUserData => {
         setCurrentUser(newUserData);
+        setProfileMessage('Профиль успешно обновлен!');
       })
       .catch(err => {
         setErrorMessage('');
@@ -224,6 +226,7 @@ export default function App() {
               path='/profile'
               component={Profile}
               loggedIn={loggedIn}
+              profileMessage={profileMessage}
               handleProfile={handleProfile}
               handleSignOut={handleExit}
             />
