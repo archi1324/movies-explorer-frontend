@@ -14,7 +14,7 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
   const [initialMovies, setInitialMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [error, setError] = useState('');
-  const [NotFound, setNotFound] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const [allMovies, setAllMovies] = useState([]);
 
   function filterShortMovies(movies) {
@@ -131,7 +131,7 @@ export default function Movies({ setIsLoader, savedMoviesList, onLikeClick, onDe
         handleShortFilms={statusCheckbox}
         shortMovies={shorts}
       />
-      {!NotFound && (<MoviesCardList
+      {!notFound && (<MoviesCardList
           error={error}
           moviesList={filteredMovies}
           savedMoviesList={savedMoviesList}

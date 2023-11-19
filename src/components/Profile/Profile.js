@@ -3,12 +3,14 @@ import { useEffect, useState, useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import useFormWithValidation from "../../hooks/useFormWithValidation";
 import Navigation from '../Navigation/Navigation';
+import {useLocation } from 'react-router-dom';
 
 export default function Profile({ handleSignOut, handleProfile, profileMessage }) {
   const { values, handleChange, isValid, resetForm, errors } = useFormWithValidation();
   const [profileMessageText, setProfileMessageText] = useState('');
   const currentUser = useContext(CurrentUserContext); // подписка на контекст
-
+  const location = useLocation();
+  
   function handleSubmit(e) {
     e.preventDefault();
     handleProfile(values);
@@ -18,6 +20,9 @@ export default function Profile({ handleSignOut, handleProfile, profileMessage }
     setProfileMessageText(profileMessage);
   }, [profileMessage]);
 
+  useEffect(() => {
+    setProfileMessageText('');
+  }, [location]);
 
   useEffect(() => {
     if (currentUser) {

@@ -62,22 +62,6 @@ export default function SavedMovies({ onDeleteClick, savedMoviesList}) {
     }
   }
 
-  // проверка чекбокса в локальном хранилище
-  useEffect(() => {
-    if (localStorage.getItem(`${currentUser.email} - shortSavedMovies`) === 'true') {
-      setShortMovies(true);
-      setShowedMovies(filterShortMovies(savedMoviesList));
-    } else {
-      setShortMovies(false);
-      setShowedMovies(savedMoviesList);
-    }
-  }, [savedMoviesList, currentUser]);
-
-  useEffect(() => {
-    setFilteredMovies(savedMoviesList);
-    savedMoviesList.length !== 0 ? setNotFound(false) : setNotFound(true);
-  }, [savedMoviesList]);
-
   return (
     <main className="saved-movies">
       <Navigation/>

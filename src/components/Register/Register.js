@@ -7,6 +7,7 @@ import Preloader from '../Preloader/Preloader';
 
 export default function Register({ handleRegister }) {
   const { values, handleChange, isValid, errors, resetForm } = useFormWithValidation();
+  const pattern = "^([^ ]+@[^ ]+\.[a-z]{2,6}|)$";
 
   useEffect(() => {
     resetForm({}, {}, false);
@@ -48,8 +49,8 @@ export default function Register({ handleRegister }) {
             name="email"
             className={`login__input ${errors.email && 'login__input_error'}`}
             onChange={handleChange}
-            value={values.email || ''}
-            pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$"
+            value={values.email}
+            pattern= {pattern}
             type="email"
             required
           />
