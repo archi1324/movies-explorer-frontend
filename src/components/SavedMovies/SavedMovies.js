@@ -65,7 +65,9 @@ export default function SavedMovies({ onDeleteClick, savedMoviesList}) {
   useEffect(() => {
     if (localStorage.getItem(`${currentUser.email} - shortSavedMovies`) === 'true') {
       setShowedMovies(savedMoviesList);
-      setShortMovies(false);}
+      } else {
+        setShortMovies(false);
+      }
   }, [savedMoviesList, currentUser]);
 
   useEffect(() => {
