@@ -47,6 +47,14 @@ export default function SavedMovies({ onDeleteClick, savedMoviesList}) {
     }
   }
 
+  useEffect(() => {
+    if (localStorage.getItem(`${currentUser.email} - shortSavedMovies`) === 'true') {
+      setShowedMovies(filterShortMovies(savedMoviesList));
+      setShortMovies(false);
+      setShowedMovies(savedMoviesList);
+      } 
+  }, [savedMoviesList, currentUser]);
+
   // состояние чекбокса
   function handleShortFilms() {
     if (!shortMovies) {
@@ -61,14 +69,6 @@ export default function SavedMovies({ onDeleteClick, savedMoviesList}) {
       setShowedMovies(filteredMovies);
     }
   }
-
-  useEffect(() => {
-    if (localStorage.getItem(`${currentUser.email} - shortSavedMovies`) === 'true') {
-      setShowedMovies(savedMoviesList);
-      } else {
-        setShortMovies(false);
-      }
-  }, [savedMoviesList, currentUser]);
 
   useEffect(() => {
      setFilteredMovies(savedMoviesList);
