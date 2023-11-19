@@ -41,7 +41,6 @@ export default function Login({ handleLoginUser }) {
             value={values.email || ''}
             type="email"
             pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$"
-            minLength={8}
             maxLength={200}
             required
           />

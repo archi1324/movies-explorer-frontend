@@ -27,6 +27,10 @@ export default function App() {
   const [setError] = useState(false);
   const [setErrorMessage] = useState({ text: '' });
 
+  useEffect(() => {
+    setProfileMessage('');
+  }, [location]);
+
   function handleRegister({ name, email, password }) {
     setIsLoader(true);
     api
@@ -95,6 +99,7 @@ export default function App() {
       })
       .catch(err => {
         setErrorMessage('');
+        setProfileMessage('');
         setError(true);
         if (err === 400) { setErrorMessage('Ошибка при обновлении пользователя') }
         if (err === 409) { setErrorMessage('Пользователь уже существует') }

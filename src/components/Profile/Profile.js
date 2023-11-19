@@ -10,7 +10,7 @@ export default function Profile({ handleSignOut, handleProfile, profileMessage }
   const [profileMessageText, setProfileMessageText] = useState('');
   const currentUser = useContext(CurrentUserContext); // подписка на контекст
   const location = useLocation();
-  
+
   function handleSubmit(e) {
     e.preventDefault();
     handleProfile(values);
@@ -20,9 +20,6 @@ export default function Profile({ handleSignOut, handleProfile, profileMessage }
     setProfileMessageText(profileMessage);
   }, [profileMessage]);
 
-  useEffect(() => {
-    setProfileMessageText('');
-  }, [location]);
 
   useEffect(() => {
     if (currentUser) {
