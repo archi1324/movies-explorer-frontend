@@ -1,39 +1,86 @@
-import React from 'react';
+import './Profile.css';
+import { useEffect, useState, useContext } from 'react';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import useFormWithValidation from "../../hooks/useFormWithValidation";
 import Navigation from '../Navigation/Navigation';
-import { Link} from 'react-router-dom';
+import {useLocation } from 'react-router-dom';
 
-function Profile() {
+export default function Profile({ handleSignOut, handleProfile, profileMessage }) {
+  const { values, handleChange, isValid, resetForm, errors } = useFormWithValidation();
+  const [profileMessageText, setProfileMessageText] = useState('');
+  const currentUser = useContext(CurrentUserContext); // подписка на контекст
+  const location = useLocation();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleProfile(values);
+  }
+
+  useEffect(() => {
+    setProfileMessageText(profileMessage);
+  }, [profileMessage]);
+
+
+  useEffect(() => {
+    if (currentUser) {
+      resetForm(currentUser, {}, true);
+    }
+  }, [currentUser, resetForm]);
+
+  const requirementValidity = (!isValid || (currentUser.name === values.name && currentUser.email === values.email));
 
   return (
     <div className="app">
-    <Navigation />
-    <main> 
-    <section className="profile">
-      <h2 className="profile__title">Привет, Виталий!</h2>
+      <Navigation />
+      <form className="profile" name="profile" noValidate onSubmit={handleSubmit}>
+
+        <h1 className="profile__title">{`Привет, ${currentUser.name || ''}!`}</h1>
         <div className="profile__list">
-        <div className="profile__container">
-            <p className="profile__item">Имя</p>
-            <p className="profile__item">Виталий</p>
+
+          <div className="profile__container">
+            <span className="profile__item profile__span">Имя</span>
+            <input
+              name="name"
+              className={`profile__item ${errors.name && 'profile__item_error'}`}
+              onChange={handleChange}
+              value={values.name || ''}
+              type="text"
+              required
+              minLength="2"
+              maxLength="30"
+              pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
+            />
+          </div>
+          <span className="profile__error">{errors.name || ''}</span>
+
+          <div className="profile__container">
+            <span className="profile__item profile__span">E-mail</span>
+            <input
+              name="email"
+              className={`profile__input ${errors.email && 'profile__input_error'}`}
+              onChange={handleChange}
+              value={values.email || ''}
+              pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$"
+              type="email"
+              required
+            />
+          </div>
+          <span className='profile__error'>{errors.email || ''}</span>
+          <span className="profile__error-text">{profileMessageText}</span>
         </div>
-        <div className="profile__container">
-            <p className="profile__item">E-mail</p>
-            <p className="profile__item">pochta@yandex.ru</p>
+        <div className="profile__buttons">
+          <button
+            type="submit"
+            className={`profile__button button ${requirementValidity ? 'profile__button-disabled' : ''}`}
+            disabled={requirementValidity ? true : false}
+          >
+            Редактировать
+          </button>
+          <div className="profile__button-container" onClick={handleSignOut}>
+            <div className="profile__button profile__button-ex button" >Выйти из аккаунта</div>
+          </div>
         </div>
-      </div>
-      <div className="profile__buttons">
-        <button className="profile__button button" type="submit">Редактировать</button>
-        <Link className= "profile__button-container" to="/signin">
-          <div className="profile__button profile__button-ex button" >Выйти из аккаунта</div>
-        </Link>
-      </div>
-      <div className="profile__save profile__save_none">
-        <span className="profile__span">При обновлении произошла ошибка</span>
-        <button className="profile__button-save_none profile__button-save button" type="submit">Сохранить</button>
-      </div>
-    </section>
-    </main>
+      </form>
     </div>
   );
 }
-
-export default Profile;

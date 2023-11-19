@@ -1,36 +1,85 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import headerLogo from '../../images/headerLogo.svg'
 import './Register.css';
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import headerLogo from '../../images/headerLogo.svg'
+import useFormWithValidation from "../../hooks/useFormWithValidation";
+import Preloader from '../Preloader/Preloader';
 
-function Register() {
-    return (
-      <main>
-        <section className="login Registr">
-        <Link to={"/"}>
-          <img className="login__icon button" src={headerLogo} alt="Лого"/>
+export default function Register({ handleRegister }) {
+  const { values, handleChange, isValid, errors, resetForm } = useFormWithValidation();
+  const patter = ""
+
+  useEffect(() => {
+    resetForm({}, {}, false);
+}, [resetForm]);
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleRegister(values);
+  }
+
+  return (
+    <main >
+      <section className="login Registr">
+        <Link to="/">
+          <img src={headerLogo} alt="Логотип" className="login__icon button" />
         </Link>
-        <form className="login__form" name="register">
+        <Preloader/>
+        <form className="login__form" name="register" onSubmit={handleSubmit} noValidate>
+
           <h1 className="login__title">Добро пожаловать!</h1>
           <span className="login__plaseholder">Имя</span>
-          <input className="login__input" type="text" name="name"
-          id="register-name" placeholder="Имя" minLength={4} maxLength={16} required />
-          <span className="login__error">Что-то пошло не так</span>
-          <span className="login__plaseholder">E-mail</span>
-          <input className="login__input" type="email" name="email"
-          id="register-email" required minLength={6} maxLength={30} placeholder="Email" />
-          <span className="login__error">Что-то пошло не так</span>
-          <span className="login__plaseholder">Пароль</span>
-          <input className="login__input" type="password" name="password"
-          id="register-password" minLength={8} maxLength={100} required placeholder="Пароль"/>
-          <span className="login__error">Что-то пошло не так</span>
-          <button className="login__button button" type="submit">Зарегистрироваться</button>
-        </form>
-        <p className="login__link">Уже зарегистрированы?
-        <Link to={"/signin"} className="login__link-src button" href="#">Войти</Link></p>
-      </section>
-      </main>
-    );
-}
+          <input
+            name="name"
+            className={`login__input ${errors.name && 'login__input_error'}`}
+            onChange={handleChange}
+            value={values.name || ''}
+            type="text"
+            required
+            minLength="2"
+            maxLength="30"
+            pattern="^[A-Za-zА-Яа-яЁё /s -]+$"
+          />
+          <span className="login__error">{errors.name || ''}</span>
 
-export default Register;
+
+          <span className="login__plaseholder">E-mail</span>
+          <input
+            name="email"
+            className={`login__input ${errors.email && 'login__input_error'}`}
+            onChange={handleChange}
+            value={values.email}
+            pattern="^([^ ]+@[^ ]+\.[a-z]{2,6}|)$"
+            type="email"
+            required
+          />
+          <span className="login__error login__error-activ">{errors.email || ''}</span>
+
+          <span className="login__plaseholder">Пароль</span>
+          <input
+            name="password"
+            className={`login__input ${errors.password && 'login__input_error'}`}
+            onChange={handleChange}
+            value={values.password}
+            type="password"
+            minLength="6"
+            required
+          />
+          <span className="login__error-activ">{errors.password || ''}</span>
+
+          <button
+            type="submit"
+            className={`login__button button ${!isValid && 'login__button_disabled'}`}
+            disabled={!isValid ? true : false}
+          >
+            Зарегистрироваться
+          </button>
+          <p className="login__link">Уже зарегистрированы?
+            <Link to={"/signin"} className="login__link-src button" href="#">Войти</Link></p>
+        </form>
+        <Preloader/>
+      </section>
+    </main>
+  )
+}
