@@ -61,7 +61,7 @@ export default function Register({ handleRegister }) {
             name="password"
             className={`login__input ${errors.password && 'login__input_error'}`}
             onChange={handleChange}
-            value={values.password || ''}
+            value={values.password}
             type="password"
             minLength="6"
             required
